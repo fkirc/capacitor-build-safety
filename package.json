@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/fkirc/capacitor-build-safety#readme",
   "bin": {
-    "capsafe": "bin/capacitor-build-safety"
+    "capsafe": "bin/capsafe"
   },
   "engines": {
     "node": ">=10.3.0"
