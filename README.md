@@ -20,6 +20,8 @@ Similarly, `capsafe` acts as an idiot-proof check for native developers who did 
 
 `Error: android/app/src/main/assets/public/webbuild_commit.json does not exist. Did you forget to build/sync with Capacitor?`
 
+Beside of native app-builds, `capsafe` is also usable for browser-based tests that run against the last web-build (to ensure that browser-based tests are always running against the latest commit).
+
 ## Integration Manual
 
 Instead of calling `capsafe` directly, you should integrate it into your existing build scripts.
