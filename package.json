@@ -1,0 +1,63 @@
+{
+  "name": "@fkirc/capacitor-build-safety",
+  "version": "0.0.1",
+  "description": "Safeguard Capacitor builds with or without automation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fkirc/capacitor-build-safety.git"
+  },
+  "keywords": [
+    "capacitor",
+    "universal app",
+    "progressive web apps",
+    "cross platform",
+    "release safety",
+    "build safety"
+  ],
+  "author": "Felix Kirchengast",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fkirc/capacitor-build-safety/issues"
+  },
+  "homepage": "https://github.com/fkirc/capacitor-build-safety#readme",
+  "bin": {
+    "capsafe": "bin/capacitor-build-safety"
+  },
+  "engines": {
+    "node": ">=10.3.0"
+  },
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf ./dist",
+    "prepublishOnly": "npm run build",
+    "lint": "npm run prettier -- --check",
+    "fmt": "npm run prettier -- --write",
+    "prettier": "prettier \"**/*.{css,html,java,js,ts}\""
+  },
+  "files": [
+    "bin/",
+    "dist/"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "prettier": "@ionic/prettier-config",
+  "devDependencies": {
+    "@ionic/prettier-config": "^1.0.0",
+    "@types/node": "^14.6.4",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "commander": "^6.1.0",
+    "tslib": "^2.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

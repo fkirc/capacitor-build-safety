@@ -1,0 +1,2 @@
+# Capacitor Build Safety
+
