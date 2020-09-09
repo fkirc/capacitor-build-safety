@@ -1,11 +1,15 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { isDirectory } from './util';
+import { isDirectory, logFatal } from './util';
 import { execSync } from 'child_process';
 
-export function logFatal(msg: string): never {
-  console.error(`error: ${msg}`);
-  return process.exit(1) as never;
+export interface CommitEvidence {
+  commitHash: string;
+  created: string;
+}
+
+export function getCommitEvidencePath(buildDir: string): string {
+  return resolve(buildDir) + '/' + 'commit-evidence.json';
 }
 
 function getDebugBuildDir(buildDir: string): string {
@@ -27,8 +31,7 @@ export function getCurrentCommitOrDie(): string {
   } catch (e) {
     //console.error(e.stderr.toString());
     logFatal(
-      `Failed to retrieve the current commit - The current directory \'${process.cwd()}\' must be a git repo.`,
+      `Failed to retrieve the current commit - The current directory \'${process.cwd()}\' is probably not a git repo.`,
     );
   }
-  //logFatal('Not implemented');
 }
