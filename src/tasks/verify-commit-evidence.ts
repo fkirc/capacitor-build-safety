@@ -1,3 +1,3 @@
-export function verifyCommitEvidence(config: unknown): void {
-  console.log('TODO Implement verifyCommitEvidence'); // TODO
+export function verifyCommitEvidence(buildDir: string): void {
+  console.log('TODO Implement verifyCommitEvidence', buildDir); // TODO
 }

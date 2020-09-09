@@ -2,7 +2,6 @@ import program from 'commander';
 
 import { createCommitEvidence } from './tasks/create-commit-evidence';
 import { verifyCommitEvidence } from './tasks/verify-commit-evidence';
-import { logFatal } from './common';
 
 process.on('unhandledRejection', error => {
   console.error('[fatal]', error);
@@ -10,37 +9,22 @@ process.on('unhandledRejection', error => {
 
 export function run(process: NodeJS.Process, cliBinDir: string): void {
   program
-    .command('create-commit-evidence')
+    .command('create-commit-evidence <build-dir>')
     .description(
-      'Creates an evidence file that holds the current HEAD-commit hash',
-    )
-    .requiredOption(
-      '--build-dir',
-      'Required: the directory where the evidence file should go',
+      'Creates an evidence file in <build-dir> that holds the current commit hash',
     )
     .action(buildDir => {
       return createCommitEvidence(buildDir);
     });
   program
-    .command('verify-commit-evidence')
+    .command('verify-commit-evidence <build-dir>')
     .description(
-      'Verifies that the current HEAD-commit matches with an evidence file',
-    )
-    .requiredOption(
-      '--build-dir',
-      'Required: the directory where the evidence file should be found',
+      'Verifies that the current commit matches with an evidence file in <build-dir>',
     )
     .action(buildDir => {
       return verifyCommitEvidence(buildDir);
     });
+  program.addHelpCommand(false);
 
-  program.arguments('[options]').action(cmd => {
-    program.outputHelp();
-    if (typeof cmd === 'undefined') {
-      logFatal('error: Missing command');
-    } else {
-      logFatal(`error: Unknown command "${cmd}"`);
-    }
-  });
   program.parse(process.argv);
 }

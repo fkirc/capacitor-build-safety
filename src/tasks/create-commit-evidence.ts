@@ -1,3 +1,3 @@
-export function createCommitEvidence(config: unknown): void {
-  console.log('TODO: Implement createCommitEvidence'); // TODO
+export function createCommitEvidence(buildDir: string): void {
+  console.log('TODO: Implement createCommitEvidence', buildDir); // TODO
 }
