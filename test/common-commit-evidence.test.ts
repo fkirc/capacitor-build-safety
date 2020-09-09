@@ -26,5 +26,15 @@ describe.each(['create-commit-evidence', 'verify-commit-evidence'])(
       );
       expect(output).toBe("error: '/invalid-absolute-dir' does not exist.\n");
     });
+
+    test('not in a git repo', async () => {
+      const output = await runCapSafeExpectFailure(`${command} /bin`, '/');
+      expect(output).toContain(
+        'fatal: not a git repository (or any of the parent directories): .git',
+      );
+      expect(output).toContain(
+        "error: Failed to retrieve the current commit - The current directory '/' must be a git repo.",
+      );
+    });
   },
 );

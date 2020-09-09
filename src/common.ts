@@ -25,9 +25,9 @@ export function getCurrentCommitOrDie(): string {
   try {
     return execSync('git rev-parse HEAD').toString().trim();
   } catch (e) {
-    console.error(e.stderr.toString());
+    //console.error(e.stderr.toString());
     logFatal(
-      `Failed to retrieve the current commit - Is the current directory \'${process.cwd()}\' a git repo?`,
+      `Failed to retrieve the current commit - The current directory \'${process.cwd()}\' must be a git repo.`,
     );
   }
   //logFatal('Not implemented');
