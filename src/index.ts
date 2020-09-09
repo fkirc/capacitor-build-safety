@@ -34,9 +34,9 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
       return verifyCommitEvidence(buildDir);
     });
 
-  program.arguments('[command]').action(cmd => {
+  program.arguments('[arguments]').action(cmd => {
+    program.outputHelp();
     if (typeof cmd === 'undefined') {
-      program.outputHelp();
       logFatal('error: Missing command');
     } else {
       logFatal(`error: Unknown command "${cmd}"`);
