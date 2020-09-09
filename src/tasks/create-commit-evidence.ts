@@ -1,3 +1,3 @@
-export async function createCommitEvidence(config: unknown) {
+export function createCommitEvidence(config: unknown): void {
   console.log('TODO: Implement createCommitEvidence'); // TODO
 }

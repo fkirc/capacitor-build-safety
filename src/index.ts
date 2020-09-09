@@ -8,7 +8,7 @@ process.on('unhandledRejection', error => {
   console.error('[fatal]', error);
 });
 
-export function run(process: NodeJS.Process, cliBinDir: string) {
+export function run(process: NodeJS.Process, cliBinDir: string): void {
   program
     .command('create-commit-evidence')
     .description(
