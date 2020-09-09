@@ -11,16 +11,25 @@ In particular, the following mistakes can happen when building and releasing Cap
 - Forgetting to build/sync a web-build for the most recent commit (leads to outdated or broken apps).
 - Inconsistent or wrong Capacitor configs (can lead to broken apps, see this [issue](https://github.com/ionic-team/capacitor/discussions/1478) for details).
 
-`capsafe` is a simple command line tool that helps to prevent those mistakes.
-For example, an Android release build can fail with the following message if a developer forgot to sync Capacitor for the most recent commit:
+`capsafe` is a simple command line tool that prevents those mistakes.
+For example, `capsafe` prevents broken Android releases with the following message, if a developer forgot to sync Capacitor for the most recent commit:
 
-`Error: Current commit 25a7a56bca717226c048368925c19fad0bc13e69 is not equal to commit 8c8476eb77f67c52040eba0f09f0bb11f947d7f2 in android/app/src/main/assets/public/webbuild_commit.json. Did you forget to repeat a build/sync with Capacitor?`
+`error: Current commit 25a7a56bca71 is not equal to commit 8c8476eb77f6 in android/app/src/main/assets/public/commit-evidence.json. Did you forget to repeat a build/sync with Capacitor?`
 
 Similarly, `capsafe` acts as a foolproof check for developers who did not copy any web-app at all:
 
-`Error: android/app/src/main/assets/public/webbuild_commit.json does not exist. Did you forget to build/sync with Capacitor?`
+`error: android/app/src/main/assets/public/commit-evidence.json does not exist. Did you forget to build/sync with Capacitor?`
 
 Beside of native app-builds, `capsafe` is also usable for browser-based tests that run against the last web-build (to ensure that browser-based tests are always running against the latest commit).
+
+### How it works
+
+`capsafe` enforces the TODO
+
+- `capsafe write-webbuild-commit` generates a file `commit-evidence.json` in your web-build folder. This file contains the current HEAD-commit.
+- Naturally, Capacitor-commands like `cap sync` copy `commit-evidence.json` to native asset directories, along with all other web-assets.
+- Later on, during native app builds, `capsafe verify-commit-evidence` verifies that the current HEAD-commit is still equal to the commit in `commit-evidence.json` in the respective native asset directory.
+- `capsafe validate-config` is an independent command that looks for all `capacitor.config.json` files and checks for inconsistencies or common mistakes.
 
 ## Integration Manual
 
@@ -28,17 +37,10 @@ Instead of calling `capsafe` directly, you should integrate it into your existin
 
 ## FAQ
 
-### How does it work?
-
-- `capsafe write-webbuild-commit` generates a file `webbuild_commit.json` in your web-build folder. This file contains the current HEAD-commit.
-- Naturally, Capacitor-commands like `cap sync` copy `webbuild_commit.json` to native asset directories, along with all other web-assets.
-- Later on, during native app builds, `capsafe validate-webbuild-commit` verifies that the current HEAD-commit is still equal to the commit in `webbuild_commit.json` in the respective native asset directory.
-- `capsafe validate-config` is an independent command that looks for all `capacitor.config.json` files and checks for inconsistencies or common mistakes.
-
 ### Continuous Integration
 
 `capsafe validate-config` is a useful check that can be easily integrated into CI pipelines.
-In contrast, `capsafe validate-webbuild-commit` is not so useful for CI pipelines.
+In contrast, `capsafe verify-commit-evidence` is not so useful for CI pipelines.
 
 ### What about uncommitted changes?
 
