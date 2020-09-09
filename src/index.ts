@@ -1,7 +1,7 @@
 import program from 'commander';
 
-import { writeWebbuildCommit } from './tasks/write-webbuild-commit';
-import { addCommand } from './tasks/add';
+import { createCommitEvidence } from './tasks/create-commit-evidence';
+import { verifyCommitEvidence } from './tasks/verify-commit-evidence';
 import { logFatal } from './common';
 
 process.on('unhandledRejection', error => {
@@ -10,21 +10,28 @@ process.on('unhandledRejection', error => {
 
 export function run(process: NodeJS.Process, cliBinDir: string) {
   program
-    .command('write-webbuild-commit [platform]')
-    .description('copy + update')
-    .option(
-      '--deployment',
-      "Optional: if provided, Podfile.lock won't be deleted and pod install will use --deployment option",
+    .command('create-commit-evidence')
+    .description(
+      'Creates an evidence file that holds the current HEAD-commit hash',
     )
-    .action(platform => {
-      return writeWebbuildCommit(platform);
+    .requiredOption(
+      '--build-dir',
+      'Required: the directory where the evidence file should go',
+    )
+    .action(buildDir => {
+      return createCommitEvidence(buildDir);
     });
-
   program
-    .command('read-webbuild-commit [platform]')
-    .description('add a native platform project')
-    .action(platform => {
-      return addCommand(platform);
+    .command('verify-commit-evidence')
+    .description(
+      'Verifies that the current HEAD-commit matches with an evidence file',
+    )
+    .requiredOption(
+      '--build-dir',
+      'Required: the directory where the evidence file should be found',
+    )
+    .action(buildDir => {
+      return verifyCommitEvidence(buildDir);
     });
 
   program.arguments('[command]').action(cmd => {
@@ -35,6 +42,5 @@ export function run(process: NodeJS.Process, cliBinDir: string) {
       logFatal(`Unknown command: ${cmd}`);
     }
   });
-
   program.parse(process.argv);
 }
