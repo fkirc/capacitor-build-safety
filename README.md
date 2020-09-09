@@ -2,7 +2,7 @@
 
 Build and release with confidence.
 
-<p><img alt="CI status" src="https://github.com/fkirc/capacitor-build-safety/workflows/CI/badge.svg/?branch=master"></p>
+<a href="https://github.com/fkirc/capacitor-build-safety/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/capacitor-build-safety/workflows/CI/badge.svg/?branch=master"></a>
 
 [Capacitor](https://capacitorjs.com/) is a great tool for cross-platform app development (iOS/Android/Web).
 However, Capacitor builds are prone to mistakes.
@@ -16,7 +16,7 @@ For example, an Android release build can fail with the following message if a d
 
 `Error: Current commit 25a7a56bca717226c048368925c19fad0bc13e69 is not equal to commit 8c8476eb77f67c52040eba0f09f0bb11f947d7f2 in android/app/src/main/assets/public/webbuild_commit.json. Did you forget to repeat a build/sync with Capacitor?`
 
-Similarly, `capsafe` acts as an idiot-proof check for native developers who did not build any web-app at all:
+Similarly, `capsafe` acts as a foolproof check for developers who did not copy any web-app at all:
 
 `Error: android/app/src/main/assets/public/webbuild_commit.json does not exist. Did you forget to build/sync with Capacitor?`
 
