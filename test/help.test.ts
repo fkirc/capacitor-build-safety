@@ -25,3 +25,15 @@ test('no arguments', async () => {
   const out = await runCapSafeExpectFailure('');
   expect(out).toBe(usageText);
 });
+
+test('unknown command', async () => {
+  const out = await runCapSafeExpectFailure('fijsoijv');
+  expect(out).toBe(
+    "error: unknown command 'fijsoijv'. See 'capsafe --help'.\n",
+  );
+});
+
+test('unknown option', async () => {
+  const out = await runCapSafeExpectFailure('--version');
+  expect(out).toBe("error: unknown option '--version'\n");
+});
