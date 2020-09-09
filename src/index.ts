@@ -36,10 +36,10 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
 
   program.arguments('[command]').action(cmd => {
     if (typeof cmd === 'undefined') {
-      console.log('Capacitor Build Safety');
       program.outputHelp();
+      logFatal('error: Missing command');
     } else {
-      logFatal(`Unknown command: ${cmd}`);
+      logFatal(`error: Unknown command "${cmd}"`);
     }
   });
   program.parse(process.argv);

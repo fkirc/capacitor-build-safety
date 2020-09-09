@@ -1,4 +1,4 @@
-import { runCapSafe } from './util';
+import { runCapSafe, runCapSafeExpectFailure } from './util';
 
 const usageText = 'Usage: capsafe [options] [command] [command]';
 
@@ -13,6 +13,7 @@ test('-h', async () => {
 });
 
 test('no arguments', async () => {
-  const stdout = await runCapSafe('');
-  expect(stdout).toContain(usageText);
+  const out = await runCapSafeExpectFailure('');
+  expect(out).toContain(usageText);
+  expect(out).toContain('error: Missing command');
 });
