@@ -1,4 +1,4 @@
-import { runCapSafe, runCapSafeExpectFailure } from './util';
+import { runCapSafe, runCapSafeExpectFailure } from './test-util';
 
 const usageText =
   'Usage: capsafe [options] [command]\n\n' +

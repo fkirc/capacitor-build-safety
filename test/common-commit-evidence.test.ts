@@ -1,4 +1,4 @@
-import { runCapSafeExpectFailure } from './util';
+import { runCapSafeExpectFailure } from './test-util';
 
 describe.each(['create-commit-evidence', 'verify-commit-evidence'])(
   'common errors of command: %s',
