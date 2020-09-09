@@ -1,6 +1,6 @@
 import program from 'commander';
 
-import { syncCommand } from './tasks/sync';
+import { writeWebbuildCommit } from './tasks/write-webbuild-commit';
 import { addCommand } from './tasks/add';
 import { logFatal } from './common';
 
@@ -10,18 +10,18 @@ process.on('unhandledRejection', error => {
 
 export function run(process: NodeJS.Process, cliBinDir: string) {
   program
-    .command('sync [platform]')
+    .command('write-webbuild-commit [platform]')
     .description('copy + update')
     .option(
       '--deployment',
       "Optional: if provided, Podfile.lock won't be deleted and pod install will use --deployment option",
     )
     .action(platform => {
-      return syncCommand(platform);
+      return writeWebbuildCommit(platform);
     });
 
   program
-    .command('add [platform]')
+    .command('read-webbuild-commit [platform]')
     .description('add a native platform project')
     .action(platform => {
       return addCommand(platform);

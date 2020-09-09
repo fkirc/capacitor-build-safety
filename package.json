@@ -33,7 +33,9 @@
     "prepublishOnly": "npm run build",
     "lint": "npm run prettier -- --check",
     "fmt": "npm run prettier -- --write",
-    "prettier": "prettier \"**/*.{css,html,java,js,ts}\""
+    "prettier": "prettier \"**/*.{css,html,java,js,ts}\"",
+    "test": "jest --runInBand",
+    "build:test": "npm run build && npm run test"
   },
   "files": [
     "bin/",
@@ -47,10 +49,13 @@
   "prettier": "@ionic/prettier-config",
   "devDependencies": {
     "@ionic/prettier-config": "^1.0.0",
+    "@types/jest": "^26.0.13",
     "@types/node": "^14.6.4",
     "husky": "^4.3.0",
+    "jest": "^26.4.2",
     "prettier": "^2.1.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.3.0",
     "typescript": "^4.0.2"
   },
   "dependencies": {
@@ -59,5 +64,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }
