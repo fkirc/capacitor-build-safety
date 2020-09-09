@@ -14,7 +14,7 @@ export async function runCapSafeExpectFailure(args: string): Promise<string> {
   return await runCommandExpectFailure(cmd);
 }
 
-async function runCommand(cmd: string): Promise<string> {
+function runCommand(cmd: string): Promise<string> {
   return new Promise((resolve, reject) => {
     exec(cmd, (error, stdout, stderr) => {
       console.log(stdout);
@@ -28,7 +28,7 @@ async function runCommand(cmd: string): Promise<string> {
   });
 }
 
-async function runCommandExpectFailure(cmd: string): Promise<string> {
+function runCommandExpectFailure(cmd: string): Promise<string> {
   return new Promise((resolve, reject) => {
     exec(cmd, (error, stdout, stderr) => {
       console.log(stdout);

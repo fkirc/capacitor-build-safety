@@ -1,4 +1,4 @@
-import { runCapSafe, runCapSafeExpectFailure } from './util';
+import { runCapSafeExpectFailure } from './util';
 
 test('missing arg', async () => {
   const stderr = await runCapSafeExpectFailure(`create-commit-evidence`);

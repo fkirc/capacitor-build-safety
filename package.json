@@ -34,7 +34,7 @@
     "lint": "npm run prettier -- --check && npm run eslint",
     "fmt": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.{css,html,java,js,ts}\"",
-    "eslint": "./node_modules/.bin/eslint 'src/**/*.{js,ts,tsx}' --ignore-path=.gitignore",
+    "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --runInBand",
     "build:test": "npm run build && npm run test"
   },
