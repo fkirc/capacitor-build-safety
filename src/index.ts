@@ -1,7 +1,7 @@
 import program from 'commander';
 
-import { createCommitEvidence } from './tasks/create-commit-evidence';
-import { verifyCommitEvidence } from './tasks/verify-commit-evidence';
+import { createCommitEvidence } from './commit-evidence/create-commit-evidence';
+import { verifyCommitEvidence } from './commit-evidence/verify-commit-evidence';
 
 process.on('unhandledRejection', error => {
   console.error('[fatal]', error);

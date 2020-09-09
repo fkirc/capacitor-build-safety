@@ -3,7 +3,7 @@ import {
   CommitEvidence,
   getCommitEvidencePath,
   getCurrentCommitOrDie,
-} from '../common';
+} from './common';
 import { writeJsonFile } from '../util';
 
 export function createCommitEvidence(buildDir: string): void {

@@ -1,4 +1,4 @@
-import { checkBuildDirOrDie, getCurrentCommitOrDie } from '../common';
+import { checkBuildDirOrDie, getCurrentCommitOrDie } from './common';
 
 export function verifyCommitEvidence(buildDir: string): void {
   checkBuildDirOrDie(buildDir);

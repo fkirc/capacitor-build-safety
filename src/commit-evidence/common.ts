@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { isDirectory, logFatal } from './util';
+import { isDirectory, logFatal } from '../util';
 import { execSync } from 'child_process';
 
 export interface CommitEvidence {
