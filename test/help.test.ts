@@ -1,6 +1,6 @@
 import { runCapSafe, runCapSafeExpectFailure } from './util';
 
-const usageText = 'Usage: capsafe [options] [command] [arguments]';
+const usageText = 'Usage: capsafe [options] [command] [options]';
 
 test('--help', async () => {
   const stdout = await runCapSafe(`--help`);
