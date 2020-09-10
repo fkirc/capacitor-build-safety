@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
-import { isDirectory, logFatal } from '../util';
+import { getDebugPath, isDirectory, logFatal } from '../util';
 import { execSync } from 'child_process';
 
 export interface CommitEvidence {
@@ -12,16 +12,16 @@ export function getCommitEvidencePath(buildDir: string): string {
   return resolve(buildDir) + '/' + 'commit-evidence.json';
 }
 
-function getDebugBuildDir(buildDir: string): string {
-  return resolve(buildDir); // Show an absolute path to users in case of errors.
+export function checkExistsOrDie(path: string): void {
+  if (!existsSync(path)) {
+    logFatal(`${getDebugPath(path)} does not exist.`);
+  }
 }
 
 export function checkBuildDirOrDie(buildDir: string): void {
-  if (!existsSync(buildDir)) {
-    logFatal(`\'${getDebugBuildDir(buildDir)}\' does not exist.`);
-  }
+  checkExistsOrDie(buildDir);
   if (!isDirectory(buildDir)) {
-    logFatal(`\'${getDebugBuildDir(buildDir)}\' is not a directory.`);
+    logFatal(`${getDebugPath(buildDir)} is not a directory.`);
   }
 }
 

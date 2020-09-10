@@ -1,4 +1,5 @@
 import { runCapSafeExpectFailure } from './test-util';
+import { resolve } from 'path';
 
 describe.each(['create-commit-evidence', 'verify-commit-evidence'])(
   'common errors of command: %s',
@@ -35,7 +36,11 @@ describe.each(['create-commit-evidence', 'verify-commit-evidence'])(
     });
 
     test('not in a git repo', async () => {
-      const output = await runCapSafeExpectFailure(`${command} /bin`, '/');
+      const evidenceDir = resolve('test/sample-evidence/');
+      const output = await runCapSafeExpectFailure(
+        `${command} ${evidenceDir}`,
+        '/',
+      );
       expect(output).toContain(
         'fatal: not a git repository (or any of the parent directories): .git',
       );
