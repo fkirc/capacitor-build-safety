@@ -26,7 +26,7 @@ export function writeJsonFile(path: string, object: unknown): string {
 }
 
 export function readJsonFileOrDie<T>(path: string): Partial<T> {
-  checkExistsOrDie(path);
+  checkNotDirOrDie(path);
   try {
     const jsonString = readUtf8File(path);
     return JSON.parse(jsonString) as Partial<T>;
@@ -42,6 +42,13 @@ function readUtf8File(filePath: string): string {
 function checkExistsOrDie(path: string): void {
   if (!existsSync(path)) {
     logFatal(`${getDebugPath(path)} does not exist.`);
+  }
+}
+
+function checkNotDirOrDie(path: string): void {
+  checkExistsOrDie(path);
+  if (isDirectory(path)) {
+    logFatal(`${getDebugPath(path)} is a directory.`);
   }
 }
 

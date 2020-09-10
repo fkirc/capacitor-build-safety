@@ -27,3 +27,11 @@ test('not a JSON file', async () => {
   expect(output).toContain('error: Failed to parse ');
   expect(output).toContain("/LICENSE'.\n");
 });
+
+test('not a file', async () => {
+  const output = await runCapSafeExpectFailure(
+    `validate-capacitor-config node_modules`,
+  );
+  expect(output).toContain('error: ');
+  expect(output).toContain("/node_modules' is a directory.\n");
+});
