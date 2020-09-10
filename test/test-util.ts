@@ -46,7 +46,7 @@ function runCommandExpectFailure(cmd: string, pwd?: string): Promise<string> {
         resolve(stdout + stderr);
       } else {
         console.error(
-          `Error: command ${cmd} succeeded although we expected an error`,
+          `error: command \'${cmd}\' succeeded although we expected an error`,
         );
         reject(stdout);
       }

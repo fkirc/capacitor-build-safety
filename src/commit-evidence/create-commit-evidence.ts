@@ -13,7 +13,7 @@ export function createCommitEvidence(buildDir: string): void {
     commitHash,
     created: new Date().toISOString(),
   };
-  const targetPath = getCommitEvidencePath(buildDir);
-  const jsonString = writeJsonFile(targetPath, evidence);
-  console.log(`Wrote commit evidence ${jsonString} to \'${targetPath}\'`);
+  const evidencePath = getCommitEvidencePath(buildDir);
+  const jsonString = writeJsonFile(evidencePath, evidence);
+  console.log(`Wrote commit evidence ${jsonString} to \'${evidencePath}\'`);
 }

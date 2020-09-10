@@ -25,7 +25,7 @@ export function writeJsonFile(path: string, object: unknown): string {
   return jsonString;
 }
 
-export function readJsonFileOrDie(path: string): unknown {
+export function readJsonFileOrDie<T>(path: string): Partial<T> {
   try {
     const jsonString = readUtf8File(path);
     return JSON.parse(jsonString);
