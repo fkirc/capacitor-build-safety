@@ -26,5 +26,5 @@ test('verify fail not exists', async () => {
   const out = await runCommandExpectFailure(
     cmdVerifyCommitEvidence('some-invalid-dir'),
   );
-  expect(out).toContain('diff: some-invalid-dir: No such file or directory');
+  expect(out).toContain('diff: some-invalid-dir:');
 });
