@@ -62,7 +62,7 @@ In this case, you can extend the build script with a simple `&&`-chaining:
 
 ### Extend Android build scripts
 
-Add the following to your app-module's `build.gradle`:
+To enforce that `verify-commit-evidence` succeeds before every Android build, add the following to your app-module's `build.gradle`:
 
 ```Groovy
 afterEvaluate {
@@ -79,7 +79,36 @@ task validateCapacitorConfig(type: Exec) {
 
 ### Extend iOS build scripts
 
-TODO
+You can use Xcode to enforce that `verify-commit-evidence` succeeds before every iOS build.
+To do so, navigate to your app target's "Build Phases" and add a new `Run Script Phase`.
+Paste the following snippet into the `Run Script Phase`:
+
+`npx capsafe verify-commit-evidence public/`
+
+To run as fast as possible, place the `Run Script Phase` before all other Build Phases.
+Once this is done, Xcode should generate something like this in your app's `project.pbxproj`:
+
+```
+B8DF42F32508BDBC00B0603F /* Run Script */ = {
+    isa = PBXShellScriptBuildPhase;
+    buildActionMask = 2147483647;
+    files = (
+    );
+    inputFileListPaths = (
+    );
+    inputPaths = (
+    );
+    name = "Run Script";
+    outputFileListPaths = (
+    );
+    outputPaths = (
+    );
+    runOnlyForDeploymentPostprocessing = 0;
+    shellPath = /bin/sh;
+    shellScript = "npx capsafe verify-commit-evidence public/";
+    showEnvVarsInLog = 0;
+};
+```
 
 ### Extend Web tests
 
