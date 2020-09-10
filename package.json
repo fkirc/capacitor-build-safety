@@ -1,6 +1,6 @@
 {
   "name": "capacitor-build-safety",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Safeguard Capacitor builds with or without automation",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --runInBand",
     "prepublishOnly": "npm run build && npm run lint && npm run test",
-    "postpublish" : "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag $PACKAGE_VERSION && git push origin --tags"
+    "postpublish" : "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag $PACKAGE_VERSION && git push origin && git push origin --tags"
   },
   "files": [
     "bin/",
