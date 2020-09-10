@@ -30,9 +30,8 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf ./dist",
-    "lint": "npm run prettier -- --check && npm run eslint",
-    "fmt": "npm run prettier -- --write",
-    "prettier": "prettier \"**/*.{css,html,java,js,ts}\"",
+    "lint": "npm run eslint",
+    "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --runInBand",
     "prepublishOnly": "git diff --exit-code && npm run build && npm run lint && npm run test && git status --porcelain",
@@ -44,7 +43,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run reformat"
     }
   },
   "prettier": "@ionic/prettier-config",
