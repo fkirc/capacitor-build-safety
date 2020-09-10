@@ -66,14 +66,14 @@ Add the following to your app-module's `build.gradle`:
 
 ```Groovy
 afterEvaluate {
-    preBuild.dependsOn(verifyCommitEvidence) // Each build must use the most recent commit.
+    preBuild.dependsOn(verifyCommitEvidence)  // Each build must use the most recent commit.
     preProductionReleaseBuild.dependsOn(verifyCommitEvidence, validateCapacitorConfig) // Capacitor config must be only validated for production builds.
 }
 task verifyCommitEvidence(type: Exec) {
-    commandLine './../node_modules/.bin/capsafe', 'verify-commit-evidence', 'fjiosefs'
+    commandLine 'npx', 'capsafe', 'verify-commit-evidence', 'src/main/assets/public'
 }
 task validateCapacitorConfig(type: Exec) {
-    commandLine './../node_modules/.bin/capsafe', 'validate-capacitor-config', 'fjiosefs'
+    commandLine 'npx', 'capsafe', 'validate-capacitor-config', 'src/main/assets/capacitor.config.json'
 }
 ```
 
@@ -86,7 +86,7 @@ TODO
 If you have tests that run against a web-build (without live reload), then you might extend your web tests like so:
 
 ```
-./node_modules/.bin/capsafe verify-commit-evidence build && my_web_testing_tool
+npx capsafe verify-commit-evidence build && my_web_testing_tool
 ```
 
 ## FAQ
