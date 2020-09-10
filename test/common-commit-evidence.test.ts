@@ -13,6 +13,13 @@ describe.each(['create-commit-evidence', 'verify-commit-evidence'])(
       expect(output).toBe("error: missing required argument 'build-dir'\n");
     });
 
+    test('unknown option', async () => {
+      const output = await runCapSafeExpectFailure(
+        `${command} --some-option=x`,
+      );
+      expect(output).toBe("error: unknown option '--some-option=x'\n");
+    });
+
     test('invalid relative dir', async () => {
       const output = await runCapSafeExpectFailure(
         `${command} invalid-relative-dir/`,
