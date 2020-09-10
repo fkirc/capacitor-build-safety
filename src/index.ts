@@ -2,6 +2,7 @@ import program from 'commander';
 
 import { createCommitEvidence } from './commit-evidence/create-commit-evidence';
 import { verifyCommitEvidence } from './commit-evidence/verify-commit-evidence';
+import { validateCapacitorConfig } from './validate-capacitor-config/validate-capacitor-config';
 
 process.on('unhandledRejection', error => {
   console.error('[fatal]', error);
@@ -23,6 +24,12 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     )
     .action(buildDir => {
       return verifyCommitEvidence(buildDir);
+    });
+  program
+    .command('validate-capacitor-config <capacitor.config.json>')
+    .description('Checks <capacitor.config.json> for common mistakes')
+    .action(buildDir => {
+      return validateCapacitorConfig(buildDir);
     });
   program.addHelpCommand(false);
 
