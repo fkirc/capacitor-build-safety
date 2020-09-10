@@ -21,3 +21,10 @@ test('verify fail', async () => {
     '< WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
   );
 });
+
+test('verify fail not exists', async () => {
+  const out = await runCommandExpectFailure(
+    cmdVerifyCommitEvidence('some-invalid-dir'),
+  );
+  expect(out).toContain('diff: some-invalid-dir: No such file or directory');
+});
