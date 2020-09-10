@@ -88,3 +88,9 @@ export function getHEADCommitHash(): string {
 export function getGitRootDir(): string {
   return runCommandOrDie('git rev-parse --show-toplevel').trim();
 }
+
+export function getCurrentBranchName(): string {
+  return runCommandOrDie(
+    'git symbolic-ref --short HEAD || git name-rev --name-only HEAD',
+  ).trim();
+}
