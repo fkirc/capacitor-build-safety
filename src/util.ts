@@ -1,4 +1,4 @@
-import { lstatSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, lstatSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
 export function isDirectory(path: string): boolean {
@@ -26,6 +26,7 @@ export function writeJsonFile(path: string, object: unknown): string {
 }
 
 export function readJsonFileOrDie<T>(path: string): Partial<T> {
+  checkExistsOrDie(path);
   try {
     const jsonString = readUtf8File(path);
     return JSON.parse(jsonString);
@@ -36,4 +37,17 @@ export function readJsonFileOrDie<T>(path: string): Partial<T> {
 
 function readUtf8File(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
+}
+
+function checkExistsOrDie(path: string): void {
+  if (!existsSync(path)) {
+    logFatal(`${getDebugPath(path)} does not exist.`);
+  }
+}
+
+export function checkDirOrDie(dir: string): void {
+  checkExistsOrDie(dir);
+  if (!isDirectory(dir)) {
+    logFatal(`${getDebugPath(dir)} is not a directory.`);
+  }
 }

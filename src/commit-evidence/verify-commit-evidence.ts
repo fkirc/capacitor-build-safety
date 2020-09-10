@@ -1,16 +1,18 @@
 import {
-  checkBuildDirOrDie,
-  checkExistsOrDie,
   CommitEvidence,
   getCommitEvidencePath,
   getCurrentCommitOrDie,
 } from './common';
-import { getDebugPath, logFatal, readJsonFileOrDie } from '../util';
+import {
+  checkDirOrDie,
+  getDebugPath,
+  logFatal,
+  readJsonFileOrDie,
+} from '../util';
 
 export function verifyCommitEvidence(buildDir: string): void {
-  checkBuildDirOrDie(buildDir);
+  checkDirOrDie(buildDir);
   const evidencePath = getCommitEvidencePath(buildDir);
-  checkExistsOrDie(evidencePath);
   const evidence: Partial<CommitEvidence> = readJsonFileOrDie(evidencePath);
   if (!evidence.commitHash) {
     logFatal(`Did not find a commit hash in ${getDebugPath(evidencePath)}.`);

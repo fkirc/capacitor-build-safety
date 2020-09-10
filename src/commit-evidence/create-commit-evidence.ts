@@ -1,13 +1,12 @@
 import {
-  checkBuildDirOrDie,
   CommitEvidence,
   getCommitEvidencePath,
   getCurrentCommitOrDie,
 } from './common';
-import { writeJsonFile } from '../util';
+import { checkDirOrDie, writeJsonFile } from '../util';
 
 export function createCommitEvidence(buildDir: string): void {
-  checkBuildDirOrDie(buildDir);
+  checkDirOrDie(buildDir);
   const commitHash = getCurrentCommitOrDie();
   const evidence: CommitEvidence = {
     commitHash,
