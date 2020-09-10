@@ -30,13 +30,12 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf ./dist",
-    "prepublishOnly": "npm run build",
     "lint": "npm run prettier -- --check && npm run eslint",
     "fmt": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.{css,html,java,js,ts}\"",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --runInBand",
-    "build:test": "npm run build && npm run test"
+    "prepublishOnly": "npm run build && npm run lint && npm run test"
   },
   "files": [
     "bin/",
