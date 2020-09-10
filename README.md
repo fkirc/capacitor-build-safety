@@ -14,11 +14,11 @@ In particular, the following mistakes can lead to broken app releases or wasted 
 `capsafe` is a simple tool that prevents those mistakes.
 For example, `capsafe` prevents broken Android releases with the following message, if a developer forgot to sync Capacitor for the most recent commit:
 
-`error: Current commit 25a7a56bca71 is not equal to commit 8c8476eb77f6 in android/app/src/main/assets/public/commit-evidence.json. Did you forget to repeat a build/sync with Capacitor?`
+`error: Current commit 25a7a56bca71 is not equal to commit 8c8476eb77f6 in 'android/app/src/main/assets/public/commit-evidence.json'. Did you forget to build/sync with Capacitor?`
 
 Similarly, `capsafe` prevents broken iOS-builds if a developer forgot to do a web-build:
 
-`error: ios/fsefs/commit-evidence.json does not exist. Did you forget to build/sync with Capacitor?`
+`error: 'ios/App/public/commit-evidence.json' does not exist.`
 
 Beside of native apps, `capsafe` is also usable for browser-based tests that run against web-builds.
 `capsafe` ensures that browser-based tests are always running against the latest commit.
@@ -28,7 +28,7 @@ Beside of native apps, `capsafe` is also usable for browser-based tests that run
 `capsafe` provides three commands to prevent broken apps: `create-commit-evidence`, `verify-commit-evidence`, `validate-capacitor-config`.
 Typically, those commands run in the following steps:
 
-- After each web-build, `create-commit-evidence` creates a file `commit-evidence.json` in your web-build folder. This file contains the current HEAD-commit hash.
+- After each web-build, `create-commit-evidence` creates a file `commit-evidence.json` in your web-build folder. `commit-evidence.json` contains the current HEAD-commit hash.
 - Naturally, Capacitor-commands like `cap sync` copy `commit-evidence.json` to native asset directories, along with all other web-assets.
 - Later on, during each native app build, `verify-commit-evidence` verifies that the current HEAD-commit is still equal to the commit in `commit-evidence.json` in the respective native asset directory.
 - `validate-capacitor-config` runs before each app release or in a continuous integration pipeline.
@@ -80,12 +80,12 @@ task validateCapacitorConfig(type: Exec) {
 ### Extend iOS build scripts
 
 You can use Xcode to enforce that `verify-commit-evidence` succeeds before every iOS build.
-To do so, navigate to your app target's "Build Phases" and add a new `Run Script Phase`.
+To do so, navigate to your app target's `Build Phases` and add a new `Run Script Phase`.
 Paste the following snippet into the `Run Script Phase`:
 
 `npx capsafe verify-commit-evidence public/`
 
-To run as fast as possible, place the `Run Script Phase` before all other Build Phases.
+To run as fast as possible, place the `Run Script Phase` before all other `Build Phases`.
 Once this is done, Xcode should generate something like this in your app's `project.pbxproj`:
 
 ```
