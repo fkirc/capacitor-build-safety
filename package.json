@@ -1,5 +1,5 @@
 {
-  "name": "@fkirc/capacitor-build-safety",
+  "name": "capacitor-build-safety",
   "version": "0.0.1",
   "description": "Safeguard Capacitor builds with or without automation",
   "repository": {

@@ -10,13 +10,13 @@ const usageText =
   '  validate-capacitor-config <capacitor.config.json>  Checks <capacitor.config.json> for common mistakes\n';
 
 test('--help', async () => {
-  const stdout = await runCapSafe(`--help`);
-  expect(stdout).toBe(usageText);
+  const out = await runCapSafe(`--help`);
+  expect(out).toBe(usageText);
 });
 
 test('-h', async () => {
-  const stdout = await runCapSafe(`-h`);
-  expect(stdout).toBe(usageText);
+  const out = await runCapSafe(`-h`);
+  expect(out).toBe(usageText);
 });
 
 test('no arguments', async () => {
