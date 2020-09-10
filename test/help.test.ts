@@ -3,13 +3,11 @@ import { runCapSafe, runCapSafeExpectFailure } from './test-util';
 const usageText =
   'Usage: capsafe [options] [command]\n\n' +
   'Options:\n' +
-  '  -h, --help                          display help for command\n\n' +
+  '  -h, --help                                         display help for command\n\n' +
   'Commands:\n' +
-  '  create-commit-evidence <build-dir>  Creates an evidence file in <build-dir>\n' +
-  '                                      that holds the current commit hash\n' +
-  '  verify-commit-evidence <build-dir>  Verifies that the current commit\n' +
-  '                                      matches with an evidence file in\n' +
-  '                                      <build-dir>\n';
+  '  create-commit-evidence <build-dir>                 Creates an evidence file in <build-dir> that holds the current commit hash\n' +
+  '  verify-commit-evidence <build-dir>                 Verifies that the current commit matches with an evidence file in <build-dir>\n' +
+  '  validate-capacitor-config <capacitor.config.json>  Checks <capacitor.config.json> for common mistakes\n';
 
 test('--help', async () => {
   const stdout = await runCapSafe(`--help`);

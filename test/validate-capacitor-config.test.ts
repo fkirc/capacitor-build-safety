@@ -1,4 +1,24 @@
-import { runCapSafeExpectFailure } from './test-util';
+import { runCapSafe, runCapSafeExpectFailure } from './test-util';
+
+test('validation success', async () => {
+  const output = await runCapSafe(
+    `validate-capacitor-config test/capacitor-config/success.capacitor.config.json`,
+  );
+  expect(output).toContain('Validation succeeded: ');
+  expect(output).toContain(
+    'test/capacitor-config/success.capacitor.config.json',
+  );
+});
+
+test('validation fail', async () => {
+  const output = await runCapSafeExpectFailure(
+    `validate-capacitor-config test/capacitor-config/failure.capacitor.config.json`,
+  );
+  expect(output).toContain('error: Validation failed: server of ');
+  expect(output).toContain(
+    "test/capacitor-config/failure.capacitor.config.json' is not undefined.",
+  );
+});
 
 test('not a JSON file', async () => {
   const output = await runCapSafeExpectFailure(

@@ -1,4 +1,4 @@
-import { logFatal, readJsonFileOrDie } from '../util';
+import { getDebugPath, logFatal, readJsonFileOrDie } from '../util';
 
 interface CapConfig {
   server?: unknown;
@@ -7,7 +7,9 @@ interface CapConfig {
 export function validateCapacitorConfig(path: string): void {
   const capConfig: Partial<CapConfig> = readJsonFileOrDie(path);
   if (capConfig.server !== undefined) {
-    logFatal('fix');
+    logFatal(
+      `Validation failed: server of ${getDebugPath(path)} is not undefined.`,
+    );
   }
-  console.log('validate success');
+  console.log(`Validation succeeded: ${getDebugPath(path)}`);
 }
