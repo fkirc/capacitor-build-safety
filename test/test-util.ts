@@ -1,5 +1,5 @@
 import { exec, execSync } from 'child_process';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 function buildCapSafeCommand(args: string) {
   return `${process.cwd()}/bin/capsafe ${args}`;
@@ -74,4 +74,10 @@ function readUtf8File(filePath: string): string {
 
 export function getHeadCommitHash(): string {
   return execSync('git rev-parse HEAD').toString().trim();
+}
+
+export function writeJsonFileVerbose(path: string, object: unknown): void {
+  console.log(`Write ${path}`, object);
+  const jsonString = JSON.stringify(object);
+  writeFileSync(path, jsonString, { encoding: 'utf8' });
 }

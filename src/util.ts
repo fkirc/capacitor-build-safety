@@ -30,7 +30,7 @@ export function readJsonFileOrDie<T>(path: string): Partial<T> {
     const jsonString = readUtf8File(path);
     return JSON.parse(jsonString);
   } catch (e) {
-    logFatal(`${getDebugPath(path)} is not a JSON file.`);
+    logFatal(`Failed to parse ${getDebugPath(path)}.`);
   }
 }
 

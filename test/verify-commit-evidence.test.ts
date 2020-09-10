@@ -1,6 +1,27 @@
-import { runCapSafeExpectFailure } from './test-util';
+import {
+  getHeadCommitHash,
+  runCapSafe,
+  runCapSafeExpectFailure,
+} from './test-util';
+import { writeJsonFile } from '../src/util';
+import { CommitEvidence } from '../src/commit-evidence/common';
 
-// TODO: verification success test
+test('verification success', async () => {
+  const commitHash = getHeadCommitHash();
+  const evidence: CommitEvidence = {
+    commitHash,
+    created: 'not-a-date',
+  };
+  writeJsonFile('test/verify-evidence/commit-evidence.json', evidence);
+
+  const output = await runCapSafe(
+    `verify-commit-evidence test/verify-evidence/`,
+  );
+  expect(output).toContain("Verification succeeded: '/");
+  expect(output).toContain(
+    `/test/verify-evidence/commit-evidence.json\' is up-to-date with current commit ${commitHash}.\n`,
+  );
+});
 
 test('wrong commit hash', async () => {
   const output = await runCapSafeExpectFailure(
@@ -28,9 +49,8 @@ test('not a JSON', async () => {
   const output = await runCapSafeExpectFailure(
     `verify-commit-evidence test/not-a-json`,
   );
-  expect(output).toContain(
-    "/test/not-a-json/commit-evidence.json' is not a JSON file.\n",
-  );
+  expect(output).toContain('error: Failed to parse ');
+  expect(output).toContain("/test/not-a-json/commit-evidence.json'.\n");
 });
 
 test('missing commit hash', async () => {
