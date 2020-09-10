@@ -7,7 +7,8 @@ const usageText =
   'Commands:\n' +
   '  create-commit-evidence <build-dir>                 Creates an evidence file in <build-dir> that holds the current commit hash\n' +
   '  verify-commit-evidence <build-dir>                 Verifies that the current commit matches with an evidence file in <build-dir>\n' +
-  '  validate-capacitor-config <capacitor.config.json>  Checks <capacitor.config.json> for common mistakes\n';
+  '  validate-capacitor-config <capacitor.config.json>  Checks <capacitor.config.json> for common mistakes\n' +
+  '  disable                                            Temporarily disables capsafe; until the current branch is switched\n';
 
 test('--help', async () => {
   const out = await runCapSafe(`--help`);

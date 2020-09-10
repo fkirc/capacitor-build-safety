@@ -1,13 +1,9 @@
-import {
-  getHeadCommitHash,
-  runCapSafe,
-  runCapSafeExpectFailure,
-} from './test-util';
-import { writeJsonFile } from '../src/util';
+import { runCapSafe, runCapSafeExpectFailure } from './test-util';
+import { getHEADCommitHash, writeJsonFile } from '../src/util';
 import { CommitEvidence } from '../src/commit-evidence/common';
 
 test('verification success', async () => {
-  const commitHash = getHeadCommitHash();
+  const commitHash = getHEADCommitHash();
   const evidence: CommitEvidence = {
     commitHash,
     created: 'not-a-date',

@@ -3,6 +3,7 @@ import program from 'commander';
 import { createCommitEvidence } from './commit-evidence/create-commit-evidence';
 import { verifyCommitEvidence } from './commit-evidence/verify-commit-evidence';
 import { validateCapacitorConfig } from './validate-capacitor-config/validate-capacitor-config';
+import { disable } from './disable/disable';
 
 process.on('unhandledRejection', error => {
   console.error('[fatal]', error);
@@ -30,6 +31,14 @@ export function run(process: NodeJS.Process, cliBinDir: string): void {
     .description('Checks <capacitor.config.json> for common mistakes')
     .action(buildDir => {
       return validateCapacitorConfig(buildDir);
+    });
+  program
+    .command('disable')
+    .description(
+      'Temporarily disables capsafe; until the current branch is switched',
+    )
+    .action(() => {
+      return disable();
     });
   program.addHelpCommand(false);
 

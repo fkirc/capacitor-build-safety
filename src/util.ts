@@ -1,12 +1,38 @@
 import { existsSync, lstatSync, readFileSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { join, resolve } from 'path';
+import { execSync } from 'child_process';
 
-export function isDirectory(path: string): boolean {
+export function joinDirWithFileName(dir: string, fileName: string): string {
+  checkDir(dir);
+  return join(resolve(dir), fileName);
+}
+
+function isDirectory(path: string): boolean {
   try {
     const stat = lstatSync(path);
     return stat.isDirectory();
   } catch (e) {
     return false;
+  }
+}
+
+function checkDir(dir: string): void {
+  checkExists(dir);
+  if (!isDirectory(dir)) {
+    logFatal(`${getDebugPath(dir)} is not a directory.`);
+  }
+}
+
+function checkNotDir(path: string): void {
+  checkExists(path);
+  if (isDirectory(path)) {
+    logFatal(`${getDebugPath(path)} is a directory.`);
+  }
+}
+
+function checkExists(path: string): void {
+  if (!existsSync(path)) {
+    logFatal(`${getDebugPath(path)} does not exist.`);
   }
 }
 
@@ -25,8 +51,13 @@ export function writeJsonFile(path: string, object: unknown): string {
   return jsonString;
 }
 
-export function readJsonFileOrDie<T>(path: string): Partial<T> {
-  checkNotDirOrDie(path);
+export function writeJsonFileVerbose(path: string, object: unknown): void {
+  const jsonString = writeJsonFile(path, object);
+  console.log(`Wrote ${jsonString} to ${getDebugPath(path)}`);
+}
+
+export function readJsonFile<T>(path: string): Partial<T> {
+  checkNotDir(path);
   try {
     const jsonString = readUtf8File(path);
     return JSON.parse(jsonString) as Partial<T>;
@@ -39,22 +70,21 @@ function readUtf8File(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 }
 
-function checkExistsOrDie(path: string): void {
-  if (!existsSync(path)) {
-    logFatal(`${getDebugPath(path)} does not exist.`);
+function runCommandOrDie(command: string): string {
+  try {
+    return execSync(command).toString();
+  } catch (e) {
+    //console.error(e.stderr.toString());
+    logFatal(
+      `Failed to run \'${command}\' in current directory \'${process.cwd()}\'.`,
+    );
   }
 }
 
-function checkNotDirOrDie(path: string): void {
-  checkExistsOrDie(path);
-  if (isDirectory(path)) {
-    logFatal(`${getDebugPath(path)} is a directory.`);
-  }
+export function getHEADCommitHash(): string {
+  return runCommandOrDie('git rev-parse HEAD').trim();
 }
 
-export function checkDirOrDie(dir: string): void {
-  checkExistsOrDie(dir);
-  if (!isDirectory(dir)) {
-    logFatal(`${getDebugPath(dir)} is not a directory.`);
-  }
+export function getGitRootDir(): string {
+  return runCommandOrDie('git rev-parse --show-toplevel').trim();
 }
