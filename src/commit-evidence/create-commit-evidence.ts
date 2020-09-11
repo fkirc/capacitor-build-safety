@@ -1,10 +1,13 @@
 import { CommitEvidence, getCommitEvidencePath } from './common';
-import { getHEADCommitHash, writeJsonFileVerbose } from '../util';
+import { writeJsonFileVerbose } from '../util';
+import { CapSafeContext } from '../config';
 
-export function createCommitEvidence(buildDir: string): void {
-  const commitHash = getHEADCommitHash();
+export function createCommitEvidence(
+  context: CapSafeContext,
+  buildDir: string,
+): void {
   const evidence: CommitEvidence = {
-    commitHash,
+    commitHash: context.gitContext.currentCommit,
     created: new Date().toISOString(),
   };
   const evidencePath = getCommitEvidencePath(buildDir);

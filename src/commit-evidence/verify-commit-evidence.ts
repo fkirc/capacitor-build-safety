@@ -1,18 +1,17 @@
 import { CommitEvidence, getCommitEvidencePath } from './common';
-import {
-  getDebugPath,
-  getHEADCommitHash,
-  logFatal,
-  readJsonFile,
-} from '../util';
+import { getDebugPath, logFatal, readJsonFile } from '../util';
+import { CapSafeContext } from '../config';
 
-export function verifyCommitEvidence(buildDir: string): void {
+export function verifyCommitEvidence(
+  context: CapSafeContext,
+  buildDir: string,
+): void {
   const evidencePath = getCommitEvidencePath(buildDir);
   const evidence: Partial<CommitEvidence> = readJsonFile(evidencePath);
   if (!evidence.commitHash) {
     logFatal(`Did not find a commit hash in ${getDebugPath(evidencePath)}.`);
   }
-  const currentCommit = getHEADCommitHash();
+  const currentCommit = context.gitContext.currentCommit;
   const evidenceCommit = evidence.commitHash;
   if (currentCommit !== evidenceCommit) {
     logFatal(

@@ -11,12 +11,12 @@ const usageText =
   '  disable                                            Temporarily disables capsafe; until the current branch is switched\n';
 
 test('--help', async () => {
-  const output = await runCapSafe(`--help`);
+  const output = await runCapSafe(`--help`, '/');
   expect(output).toBe(usageText);
 });
 
 test('-h', async () => {
-  const output = await runCapSafe(`-h`);
+  const output = await runCapSafe(`-h`, '/');
   expect(output).toBe(usageText);
 });
 

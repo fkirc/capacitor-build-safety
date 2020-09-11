@@ -70,7 +70,7 @@ function readUtf8File(filePath: string): string {
   return readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 }
 
-function runCommandOrDie(command: string): string {
+export function runCommandOrDie(command: string): string {
   try {
     return execSync(command).toString();
   } catch (e) {
@@ -79,18 +79,4 @@ function runCommandOrDie(command: string): string {
       `Failed to run \'${command}\' in current directory \'${process.cwd()}\'.`,
     );
   }
-}
-
-export function getHEADCommitHash(): string {
-  return runCommandOrDie('git rev-parse HEAD').trim();
-}
-
-export function getGitRootDir(): string {
-  return runCommandOrDie('git rev-parse --show-toplevel').trim();
-}
-
-export function getCurrentBranchName(): string {
-  return runCommandOrDie(
-    'git symbolic-ref --short HEAD || git name-rev --name-only HEAD',
-  ).trim();
 }

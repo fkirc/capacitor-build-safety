@@ -1,24 +1,29 @@
 import {
-  getCurrentBranchName,
   getDebugPath,
-  getGitRootDir,
   joinDirWithFileName,
   writeJsonFileVerbose,
 } from '../util';
+import { CapSafeContext } from '../config';
 
 export interface CapSafeDisable {
   disabledBranch: string;
 }
 
-function getDisablePath(): string {
-  return joinDirWithFileName(getGitRootDir(), 'capsafe.disable.json');
+function getDisablePath(context: CapSafeContext): string {
+  return joinDirWithFileName(
+    context.gitContext.gitRootDir,
+    'capsafe.disable.json',
+  );
 }
 
-export function disable(): void {
-  const disablePath = getDisablePath();
-  const currentBranchName = getCurrentBranchName();
+export function resolveDisableFile(): CapSafeDisable | null {
+  return null;
+}
+
+export function disableCommand(context: CapSafeContext): void {
+  const disablePath = getDisablePath(context);
   const capSafeDisable: CapSafeDisable = {
-    disabledBranch: currentBranchName,
+    disabledBranch: context.gitContext.currentBranch,
   };
   writeJsonFileVerbose(disablePath, capSafeDisable);
   console.error(

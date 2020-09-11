@@ -1,6 +1,7 @@
 import { runCapSafe, runCapSafeExpectFailure } from './test-util';
-import { getHEADCommitHash, writeJsonFile } from '../src/util';
+import { writeJsonFile } from '../src/util';
 import { CommitEvidence } from '../src/commit-evidence/common';
+import { getHEADCommitHash } from '../src/git-context';
 
 test('verification success', async () => {
   const commitHash = getHEADCommitHash();

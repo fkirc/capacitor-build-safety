@@ -1,6 +1,7 @@
 import { runCapSafe } from './test-util';
 import { CommitEvidence } from '../src/commit-evidence/common';
-import { getHEADCommitHash, readJsonFile } from '../src/util';
+import { readJsonFile } from '../src/util';
+import { getHEADCommitHash } from '../src/git-context';
 
 test('create evidence', async () => {
   const output = await runCapSafe(

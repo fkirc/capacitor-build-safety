@@ -18,7 +18,7 @@ describe.each(['create-commit-evidence', 'verify-commit-evidence'])(
       expect(output).toContain('fatal:');
       expect(output).toContain('.git');
       expect(output).toContain(
-        "error: Failed to run 'git rev-parse HEAD' in current directory",
+        "error: Failed to run 'git rev-parse --show-toplevel' in current directory '/'.",
       );
     });
   },
