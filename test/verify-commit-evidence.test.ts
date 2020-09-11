@@ -3,7 +3,7 @@ import { writeJsonFile } from '../src/util';
 import { CommitEvidence } from '../src/commit-evidence/common';
 import { getHEADCommitHash } from '../src/git-context';
 
-test('verification success', async () => {
+export async function verifyCommitEvidenceSuccess(): Promise<void> {
   const commitHash = getHEADCommitHash();
   const evidence: CommitEvidence = {
     commitHash,
@@ -18,6 +18,10 @@ test('verification success', async () => {
   expect(output).toContain(
     `/test/verify-evidence/commit-evidence.json\' is up-to-date with current commit ${commitHash}.\n`,
   );
+}
+
+test('verification success', async () => {
+  await verifyCommitEvidenceSuccess();
 });
 
 test('wrong commit hash', async () => {

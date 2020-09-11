@@ -1,6 +1,6 @@
 import { CommitEvidence, getCommitEvidencePath } from './common';
 import { writeJsonFileVerbose } from '../util';
-import { CapSafeContext } from '../config';
+import { CapSafeContext } from '../resolve-context';
 
 export function createCommitEvidence(
   context: CapSafeContext,

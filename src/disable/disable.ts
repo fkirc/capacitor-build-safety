@@ -3,31 +3,35 @@ import {
   joinDirWithFileName,
   writeJsonFileVerbose,
 } from '../util';
-import { CapSafeContext } from '../config';
+import { CapSafeContext, DisableFile } from '../resolve-context';
+import { GitContext } from '../git-context';
 
-export interface CapSafeDisable {
-  disabledBranch: string;
+export function getDisablePath(gitContext: GitContext): string {
+  return joinDirWithFileName(gitContext.gitRootDir, 'capsafe.disable.json');
 }
 
-function getDisablePath(context: CapSafeContext): string {
-  return joinDirWithFileName(
-    context.gitContext.gitRootDir,
-    'capsafe.disable.json',
+export function checkCommandDisabled(context: CapSafeContext): boolean {
+  if (!context.disabled) {
+    return false;
+  }
+  const disablePath = getDisablePath(context.gitContext);
+  console.log(
+    `Skip execution because the current branch \'${
+      context.gitContext.currentBranch
+    }\' is disabled in ${getDebugPath(disablePath)}.`,
   );
-}
-
-export function resolveDisableFile(): CapSafeDisable | null {
-  return null;
+  return true;
 }
 
 export function disableCommand(context: CapSafeContext): void {
-  const disablePath = getDisablePath(context);
-  const capSafeDisable: CapSafeDisable = {
-    disabledBranch: context.gitContext.currentBranch,
+  const disablePath = getDisablePath(context.gitContext);
+  const disabledBranch = context.gitContext.currentBranch;
+  const disableFile: DisableFile = {
+    disabledBranch,
   };
-  writeJsonFileVerbose(disablePath, capSafeDisable);
-  console.error(
-    `To re-enable capsafe, switch branches or delete ${getDebugPath(
+  writeJsonFileVerbose(disablePath, disableFile);
+  console.log(
+    `Disabled capsafe for branch \'${disabledBranch}\'. To re-enable capsafe, switch branches or delete ${getDebugPath(
       disablePath,
     )}.`,
   );

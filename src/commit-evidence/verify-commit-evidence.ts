@@ -1,11 +1,15 @@
 import { CommitEvidence, getCommitEvidencePath } from './common';
 import { getDebugPath, logFatal, readJsonFile } from '../util';
-import { CapSafeContext } from '../config';
+import { CapSafeContext } from '../resolve-context';
+import { checkCommandDisabled } from '../disable/disable';
 
 export function verifyCommitEvidence(
   context: CapSafeContext,
   buildDir: string,
 ): void {
+  if (checkCommandDisabled(context)) {
+    return;
+  }
   const evidencePath = getCommitEvidencePath(buildDir);
   const evidence: Partial<CommitEvidence> = readJsonFile(evidencePath);
   if (!evidence.commitHash) {

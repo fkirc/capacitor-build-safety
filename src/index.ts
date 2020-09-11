@@ -3,7 +3,7 @@ import program from 'commander';
 import { createCommitEvidence } from './commit-evidence/create-commit-evidence';
 import { verifyCommitEvidence } from './commit-evidence/verify-commit-evidence';
 import { validateCapacitorConfig } from './validate-capacitor-config/validate-capacitor-config';
-import { resolveContext } from './config';
+import { resolveContext } from './resolve-context';
 import { disableCommand } from './disable/disable';
 
 process.on('unhandledRejection', error => {
