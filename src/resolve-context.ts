@@ -1,26 +1,40 @@
 import { GitContext, resolveGitContext } from './git-context';
 import { existsSync } from 'fs';
-import { getDebugPath, logFatal, readJsonFile } from './util';
-import { getDisablePath } from './disable/disable';
+import {
+  deleteFile,
+  getDebugPath,
+  joinDirWithFileName,
+  logFatal,
+  readJsonFile,
+} from './util';
 
 export interface CapSafeContext {
   gitContext: GitContext;
   disabled: boolean;
+  disableFilePath: string;
 }
 
 export interface DisableFile {
   disabledBranch: string;
 }
 
-function resolveDisableFile(gitContext: GitContext): DisableFile | null {
-  const disablePath = getDisablePath(gitContext);
-  if (!existsSync(disablePath)) {
+function resolveDisableFilePath(gitContext: GitContext): string {
+  return joinDirWithFileName(gitContext.gitRootDir, 'capsafe.disable.json');
+}
+
+function resolveDisableFile(
+  gitContext: GitContext,
+  disableFilePath: string,
+): DisableFile | null {
+  if (!existsSync(disableFilePath)) {
     return null;
   }
-  const disable: Partial<DisableFile> = readJsonFile(disablePath);
-  const disabledBranch = disable.disabledBranch;
+  const disableFile: Partial<DisableFile> = readJsonFile(disableFilePath);
+  const disabledBranch = disableFile.disabledBranch;
   if (!disabledBranch) {
-    logFatal(`Failed to parse ${getDebugPath(disablePath)}`);
+    logFatal(
+      `Missing property 'disabledBranch' in ${getDebugPath(disableFilePath)}`,
+    );
   }
   return {
     disabledBranch,
@@ -30,21 +44,34 @@ function resolveDisableFile(gitContext: GitContext): DisableFile | null {
 function checkDisableFile(
   gitContext: GitContext,
   disableFile: DisableFile | null,
+  disableFilePath: string,
 ): boolean {
   if (!disableFile) {
     return false;
   }
-  // TODO: Remove disableFile if branches are not matching.
-  // TODO: Match branches against CapSafeConfig.
-  return disableFile.disabledBranch === gitContext.currentBranch;
+  const currentBranch = gitContext.currentBranch;
+  const disabledBranch = disableFile.disabledBranch;
+  if (currentBranch === disabledBranch) {
+    return true;
+  } else {
+    deleteFile(disableFilePath);
+    console.log(
+      `Re-enabled capsafe because the current branch \'${currentBranch}\' was not equal to branch \'${disabledBranch}\' in ${getDebugPath(
+        disableFilePath,
+      )}.`,
+    );
+    return false;
+  }
 }
 
 export function resolveContext(): CapSafeContext {
   const gitContext = resolveGitContext();
-  const disableFile = resolveDisableFile(gitContext);
-  const disabled = checkDisableFile(gitContext, disableFile);
+  const disableFilePath = resolveDisableFilePath(gitContext);
+  const disableFile = resolveDisableFile(gitContext, disableFilePath);
+  const disabled = checkDisableFile(gitContext, disableFile, disableFilePath);
   return {
     gitContext,
     disabled,
+    disableFilePath: disableFilePath,
   };
 }

@@ -1,4 +1,10 @@
-import { existsSync, lstatSync, readFileSync, writeFileSync } from 'fs';
+import {
+  existsSync,
+  lstatSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from 'fs';
 import { join, resolve } from 'path';
 import { execSync } from 'child_process';
 
@@ -45,7 +51,13 @@ export function logFatal(msg: string): never {
   return process.exit(1) as never;
 }
 
-export function writeJsonFile(path: string, object: unknown): string {
+export function deleteFile(path: string): void {
+  checkExists(path);
+  unlinkSync(path);
+  console.log(`Deleted ${getDebugPath(path)}`);
+}
+
+function writeJsonFile(path: string, object: unknown): string {
   const jsonString = JSON.stringify(object);
   writeFileSync(path, jsonString, { encoding: 'utf8' });
   return jsonString;

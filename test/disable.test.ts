@@ -34,13 +34,11 @@ async function verifyCommitEvidenceDisabled(featureBranch: string) {
   expect(output).toContain(`/capsafe.disable.json\'.\n`);
 }
 
-async function cleanup() {
+beforeEach(async () => {
   await runCommand('rm -f capsafe.disable.json');
-}
+});
 
 test('disable feature branch', async () => {
-  await cleanup();
-
   const branchAtBegin = getCurrentBranch();
   const featureBranch = 'some_feature_branch';
   expect(branchAtBegin !== featureBranch).toBe(true);
@@ -54,5 +52,7 @@ test('disable feature branch', async () => {
   await verifyCommitEvidenceDisabled(featureBranch);
 
   await runCommand(`git checkout ${branchAtBegin}`);
+
+  await verifyCommitEvidenceSuccess();
   // TODO: verify success, verify deletion of capsafe.config.json because of the branch switch
 });

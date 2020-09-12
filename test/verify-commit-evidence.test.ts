@@ -1,5 +1,5 @@
 import { runCapSafe, runCapSafeExpectFailure } from './test-util';
-import { writeJsonFile } from '../src/util';
+import { writeJsonFileVerbose } from '../src/util';
 import { CommitEvidence } from '../src/commit-evidence/common';
 import { getHEADCommitHash } from '../src/git-context';
 
@@ -9,7 +9,7 @@ export async function verifyCommitEvidenceSuccess(): Promise<void> {
     commitHash,
     created: 'not-a-date',
   };
-  writeJsonFile('test/verify-evidence/commit-evidence.json', evidence);
+  writeJsonFileVerbose('test/verify-evidence/commit-evidence.json', evidence);
 
   const output = await runCapSafe(
     `verify-commit-evidence test/verify-evidence/`,
