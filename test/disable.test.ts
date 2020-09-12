@@ -28,9 +28,7 @@ async function runDisable(branchName: string) {
 }
 
 async function verifyCommitEvidenceDisabled(featureBranch: string) {
-  const output = await runCapSafe(
-    `verify-commit-evidence test/verify-evidence/`,
-  );
+  const output = await runCapSafe(`verify-commit-evidence test/`);
   expect(output).toContain(
     `Skip execution because the current branch \'${featureBranch}\' is disabled in`,
   );

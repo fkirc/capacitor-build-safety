@@ -1,22 +1,17 @@
 import { runCapSafe, runCapSafeExpectFailure } from './test-util';
-import { writeJsonFileVerbose } from '../src/util';
-import { CommitEvidence } from '../src/commit-evidence/common';
 import { getHEADCommitHash } from '../src/git-context';
+import { createCommitEvidenceSuccess } from './create-commit-evidence.test';
 
 export async function verifyCommitEvidenceSuccess(): Promise<void> {
   const commitHash = getHEADCommitHash();
-  const evidence: CommitEvidence = {
-    commitHash,
-    created: 'not-a-date',
-  };
-  writeJsonFileVerbose('test/verify-evidence/commit-evidence.json', evidence);
+  await createCommitEvidenceSuccess();
 
   const output = await runCapSafe(
-    `verify-commit-evidence test/verify-evidence/`,
+    `verify-commit-evidence test/create-evidence/`,
   );
   expect(output).toContain("Verification succeeded: '/");
   expect(output).toContain(
-    `/test/verify-evidence/commit-evidence.json\' is up-to-date with current commit ${commitHash}.\n`,
+    `/test/create-evidence/commit-evidence.json\' is up-to-date with current commit ${commitHash}.\n`,
   );
 }
 

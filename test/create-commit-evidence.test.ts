@@ -3,7 +3,7 @@ import { CommitEvidence } from '../src/commit-evidence/common';
 import { readJsonFile } from '../src/util';
 import { getHEADCommitHash } from '../src/git-context';
 
-test('create evidence', async () => {
+export async function createCommitEvidenceSuccess(): Promise<void> {
   const output = await runCapSafe(
     `create-commit-evidence test/create-evidence/`,
   );
@@ -16,4 +16,8 @@ test('create evidence', async () => {
   expect(typeof evidence.created === 'string').toBe(true);
   expect(typeof evidence.commitHash === 'string').toBe(true);
   expect(evidence.commitHash).toBe(getHEADCommitHash());
+}
+
+test('create evidence', async () => {
+  await createCommitEvidenceSuccess();
 });
