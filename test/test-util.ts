@@ -1,7 +1,8 @@
 import { exec } from 'child_process';
+import { join } from 'path';
 
 function buildCapSafeCommand(args: string) {
-  return `${process.cwd()}/bin/capsafe ${args}`;
+  return `${join(process.cwd(), 'bin', 'capsafe')} ${args}`;
 }
 
 export async function runCapSafe(args: string, pwd?: string): Promise<string> {
