@@ -125,7 +125,8 @@ In this case, you can quickly disable `capsafe` by running:
 
 `npx capsafe disable`
 
-This will disable safety checks until the current branch is switched.
+This will disable safety checks until you switch the current branch, or until you delete `capsafe.disable.json`.
+To remain safe, you should add `capsafe.disable.json` to your `.gitignore`.
 
 ## FAQ
 
