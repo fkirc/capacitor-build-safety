@@ -32,3 +32,5 @@ jobs:
       - name: Release
         if: ${{ github.event.inputs.release == 'true' }}
         run: npm publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
