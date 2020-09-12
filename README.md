@@ -118,6 +118,15 @@ If you have tests that run against a web-build (without live reload), then you m
 npx capsafe verify-commit-evidence build && my_web_testing_tool
 ```
 
+## Disable checks temporarily
+
+For pure native development, the checks of `capsafe` might be annoying.
+In this case, you can quickly disable `capsafe` by running:
+
+`npx capsafe disable`
+
+This will disable safety checks until the current branch is switched.
+
 ## FAQ
 
 ### Continuous Integration
