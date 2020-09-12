@@ -3,24 +3,13 @@ import { existsSync } from 'fs';
 import { getDebugPath, logFatal, readJsonFile } from './util';
 import { getDisablePath } from './disable/disable';
 
-export interface CapSafeConfig {
-  strictBranches: string[];
-}
-
 export interface CapSafeContext {
   gitContext: GitContext;
-  config: CapSafeConfig;
   disabled: boolean;
 }
 
 export interface DisableFile {
   disabledBranch: string;
-}
-
-function resolveCapSafeConfig(gitContext: GitContext): CapSafeConfig {
-  return {
-    strictBranches: [], // TODO: Implement
-  };
 }
 
 function resolveDisableFile(gitContext: GitContext): DisableFile | null {
@@ -52,12 +41,10 @@ function checkDisableFile(
 
 export function resolveContext(): CapSafeContext {
   const gitContext = resolveGitContext();
-  const config = resolveCapSafeConfig(gitContext);
   const disableFile = resolveDisableFile(gitContext);
   const disabled = checkDisableFile(gitContext, disableFile);
   return {
     gitContext,
-    config,
     disabled,
   };
 }
