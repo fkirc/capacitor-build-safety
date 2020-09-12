@@ -33,6 +33,16 @@ Typically, those commands run in the following steps:
 - Later on, during each native app build, `verify-commit-evidence` verifies that the current HEAD-commit is still equal to the commit in `commit-evidence.json` in the respective native asset directory.
 - `validate-capacitor-config` runs before each app release or in a continuous integration pipeline.
 
+## Disable checks temporarily
+
+For pure native development, the checks of `capsafe` might be annoying.
+In this case, you can quickly disable `capsafe` by running:
+
+`npx capsafe disable`
+
+This will disable safety checks until you switch the current branch, or until you delete `capsafe.disable.json`.
+To remain safe, you should add `capsafe.disable.json` to your `.gitignore`.
+
 ## Integration Manual
 
 Firstly, install `capsafe` via npm:
@@ -117,16 +127,6 @@ If you have tests that run against a web-build (without live reload), then you m
 ```
 npx capsafe verify-commit-evidence build && my_web_testing_tool
 ```
-
-## Disable checks temporarily
-
-For pure native development, the checks of `capsafe` might be annoying.
-In this case, you can quickly disable `capsafe` by running:
-
-`npx capsafe disable`
-
-This will disable safety checks until you switch the current branch, or until you delete `capsafe.disable.json`.
-To remain safe, you should add `capsafe.disable.json` to your `.gitignore`.
 
 ## FAQ
 
