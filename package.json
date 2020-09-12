@@ -34,8 +34,8 @@
     "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
     "test": "jest --runInBand --maxConcurrency=1",
-    "prepublishOnly": "git diff --exit-code && npm run build && npm run lint && npm run test",
-    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag $PACKAGE_VERSION && git push origin && git push origin --tags"
+    "prepublishOnly": "git diff --exit-code",
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag $PACKAGE_VERSION && git push origin --tags"
   },
   "files": [
     "bin/",
