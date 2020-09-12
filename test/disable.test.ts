@@ -1,7 +1,10 @@
 import { runCapSafe, runCommand } from './test-util';
 import { readJsonFile } from '../src/util';
 import { getCurrentBranch } from '../src/git-context';
-import { verifyCommitEvidenceSuccess } from './verify-commit-evidence.test';
+import {
+  verifyCommitEvidenceSuccess,
+  verifyCommitEvidenceWrongCommitHash,
+} from './verify-commit-evidence.test';
 import { DisableFile } from '../src/resolve-context';
 
 async function switchToBranch(branchName: string) {
@@ -38,7 +41,7 @@ beforeEach(async () => {
   await runCommand('rm -f capsafe.disable.json');
 });
 
-test('disable feature branch', async () => {
+test('disable feature branch - re-enable after branch switching', async () => {
   const branchAtBegin = getCurrentBranch();
   const featureBranch = 'some_feature_branch';
   expect(branchAtBegin !== featureBranch).toBe(true);
@@ -53,6 +56,10 @@ test('disable feature branch', async () => {
 
   await runCommand(`git checkout ${branchAtBegin}`);
 
-  await verifyCommitEvidenceSuccess();
-  // TODO: verify success, verify deletion of capsafe.config.json because of the branch switch
+  const output = await verifyCommitEvidenceWrongCommitHash();
+  expect(output).toContain('Deleted');
+  expect(output).toContain("capsafe.disable.json'");
+  expect(output).toContain('Re-enabled capsafe because the current branch ');
+  expect(output).toContain("was not equal to branch 'some_feature_branch' in ");
+  expect(output).toContain('capsafe.disable.json');
 });

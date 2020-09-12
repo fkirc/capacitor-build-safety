@@ -20,11 +20,7 @@ export async function verifyCommitEvidenceSuccess(): Promise<void> {
   );
 }
 
-test('verification success', async () => {
-  await verifyCommitEvidenceSuccess();
-});
-
-test('wrong commit hash', async () => {
+export async function verifyCommitEvidenceWrongCommitHash(): Promise<string> {
   const output = await runCapSafeExpectFailure(
     `verify-commit-evidence test/sample-evidence`,
   );
@@ -35,6 +31,15 @@ test('wrong commit hash', async () => {
   expect(output).toContain(
     "/test/sample-evidence/commit-evidence.json'. Did you forget to build/sync with Capacitor?\n",
   );
+  return output;
+}
+
+test('verification success', async () => {
+  await verifyCommitEvidenceSuccess();
+});
+
+test('wrong commit hash', async () => {
+  await verifyCommitEvidenceWrongCommitHash();
 });
 
 test('evidence not found', async () => {
