@@ -5,6 +5,11 @@ on:
     branches:
       - '**'
   workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release'
+        required: true
+        default: 'false'
 
 jobs:
   test-cli:
@@ -24,3 +29,6 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm run test
+      - name: Release
+        if: ${{ github.event.inputs.release == true }}
+        run: npm run publish
