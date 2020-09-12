@@ -31,6 +31,6 @@ jobs:
       - run: npm run test
       - name: Release
         if: ${{ github.event.inputs.release == 'true' }}
-        run: npm publish
+        run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}" && npm publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
