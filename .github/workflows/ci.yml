@@ -9,10 +9,10 @@ on:
       release:
         description: 'Release'
         required: true
-        default: 'false'
+        default: 'true'
 
 jobs:
-  test-cli:
+  ci:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:
