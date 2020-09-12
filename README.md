@@ -140,7 +140,7 @@ To remain safe, you should add `capsafe.disable.json` to your `.gitignore`.
 
 ### What about uncommitted changes?
 
-`capsafe` only looks at the current HEAD-commit and ignores uncommitted changes. Although uncommitted changes can be a risk, this behavior is a tradeoff between safety and usability.
+`capsafe` only looks at the current commit/branch and ignores uncommitted changes. Although uncommitted changes can be a risk, this behavior is a tradeoff between safety and usability.
 For example, you might want to increment an Android version number without repeating a web-build.
 `capsafe` allows you to do so with the following steps:
 - Increment an Android version number without committing it.
