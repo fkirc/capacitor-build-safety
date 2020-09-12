@@ -1,7 +1,7 @@
 {
   "name": "capacitor-build-safety",
   "version": "1.0.0",
-  "description": "Safeguard Capacitor builds with or without automation",
+  "description": "Make app releases safer. Reduce thinking with automated checks.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fkirc/capacitor-build-safety.git"
@@ -30,13 +30,12 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf ./dist",
-    "lint": "npm run prettier -- --check && npm run eslint",
-    "fmt": "npm run prettier -- --write",
-    "prettier": "prettier \"**/*.{css,html,java,js,ts}\"",
+    "lint": "npm run eslint",
+    "reformat": "npm run eslint -- --fix",
     "eslint": "./node_modules/.bin/eslint '**/*.{js,ts,tsx}' --ignore-path=.gitignore",
-    "test": "jest --runInBand",
-    "prepublishOnly": "npm run build && npm run lint && npm run test",
-    "postpublish" : "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag $PACKAGE_VERSION && git push origin && git push origin --tags"
+    "test": "jest --runInBand --maxConcurrency=1",
+    "prepublishOnly": "git diff --exit-code && npm run build && npm run lint && npm run test && git status --porcelain",
+    "postpublish": "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag $PACKAGE_VERSION && git push origin && git push origin --tags"
   },
   "files": [
     "bin/",
@@ -44,7 +43,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run reformat"
     }
   },
   "prettier": "@ionic/prettier-config",

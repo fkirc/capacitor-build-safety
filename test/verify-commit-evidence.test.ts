@@ -1,18 +1,15 @@
-import {
-  getHeadCommitHash,
-  runCapSafe,
-  runCapSafeExpectFailure,
-} from './test-util';
-import { writeJsonFile } from '../src/util';
+import { runCapSafe, runCapSafeExpectFailure } from './test-util';
+import { writeJsonFileVerbose } from '../src/util';
 import { CommitEvidence } from '../src/commit-evidence/common';
+import { getHEADCommitHash } from '../src/git-context';
 
-test('verification success', async () => {
-  const commitHash = getHeadCommitHash();
+export async function verifyCommitEvidenceSuccess(): Promise<void> {
+  const commitHash = getHEADCommitHash();
   const evidence: CommitEvidence = {
     commitHash,
     created: 'not-a-date',
   };
-  writeJsonFile('test/verify-evidence/commit-evidence.json', evidence);
+  writeJsonFileVerbose('test/verify-evidence/commit-evidence.json', evidence);
 
   const output = await runCapSafe(
     `verify-commit-evidence test/verify-evidence/`,
@@ -21,9 +18,9 @@ test('verification success', async () => {
   expect(output).toContain(
     `/test/verify-evidence/commit-evidence.json\' is up-to-date with current commit ${commitHash}.\n`,
   );
-});
+}
 
-test('wrong commit hash', async () => {
+export async function verifyCommitEvidenceWrongCommitHash(): Promise<string> {
   const output = await runCapSafeExpectFailure(
     `verify-commit-evidence test/sample-evidence`,
   );
@@ -34,6 +31,15 @@ test('wrong commit hash', async () => {
   expect(output).toContain(
     "/test/sample-evidence/commit-evidence.json'. Did you forget to build/sync with Capacitor?\n",
   );
+  return output;
+}
+
+test('verification success', async () => {
+  await verifyCommitEvidenceSuccess();
+});
+
+test('wrong commit hash', async () => {
+  await verifyCommitEvidenceWrongCommitHash();
 });
 
 test('evidence not found', async () => {

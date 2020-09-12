@@ -7,31 +7,32 @@ const usageText =
   'Commands:\n' +
   '  create-commit-evidence <build-dir>                 Creates an evidence file in <build-dir> that holds the current commit hash\n' +
   '  verify-commit-evidence <build-dir>                 Verifies that the current commit matches with an evidence file in <build-dir>\n' +
-  '  validate-capacitor-config <capacitor.config.json>  Checks <capacitor.config.json> for common mistakes\n';
+  '  validate-capacitor-config <capacitor.config.json>  Checks <capacitor.config.json> for common mistakes\n' +
+  '  disable                                            Temporarily disables capsafe; until the current branch is switched\n';
 
 test('--help', async () => {
-  const out = await runCapSafe(`--help`);
-  expect(out).toBe(usageText);
+  const output = await runCapSafe(`--help`, '/');
+  expect(output).toBe(usageText);
 });
 
 test('-h', async () => {
-  const out = await runCapSafe(`-h`);
-  expect(out).toBe(usageText);
+  const output = await runCapSafe(`-h`, '/');
+  expect(output).toBe(usageText);
 });
 
 test('no arguments', async () => {
-  const out = await runCapSafeExpectFailure('');
-  expect(out).toBe(usageText);
+  const output = await runCapSafeExpectFailure('');
+  expect(output).toBe(usageText);
 });
 
 test('unknown command', async () => {
-  const out = await runCapSafeExpectFailure('fijsoijv');
-  expect(out).toBe(
+  const output = await runCapSafeExpectFailure('fijsoijv');
+  expect(output).toBe(
     "error: unknown command 'fijsoijv'. See 'capsafe --help'.\n",
   );
 });
 
 test('unknown option', async () => {
-  const out = await runCapSafeExpectFailure('--version');
-  expect(out).toBe("error: unknown option '--version'\n");
+  const output = await runCapSafeExpectFailure('--version');
+  expect(output).toBe("error: unknown option '--version'\n");
 });
