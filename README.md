@@ -1,4 +1,4 @@
-# Capacitor Build Safety
+# Capacitor Build Safety - capsafe
 
 Build and release with confidence.
 
