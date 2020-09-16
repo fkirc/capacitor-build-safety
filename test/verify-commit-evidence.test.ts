@@ -1,16 +1,18 @@
-import { runCapSafe, runCapSafeExpectFailure, runCommand } from './test-util';
+import {
+  runCapSafe,
+  runCapSafeExpectFailure,
+  runCommand,
+  switchToNewFeatureBranch,
+} from './test-util';
 import {
   getCurrentBranch,
   getHEADCommitHash,
   getHEADTreeHash,
 } from '../src/git-context';
 import { createCommitEvidenceSuccess } from './create-commit-evidence.test';
-import { switchToBranch } from './disable.test';
 
 export async function verifyCommitEvidenceSuccess(): Promise<void> {
   const commitHash = getHEADCommitHash();
-  await createCommitEvidenceSuccess();
-
   const output = await runCapSafe(
     `verify-commit-evidence test/create-evidence/`,
   );
@@ -46,24 +48,22 @@ export async function verifyCommitEvidenceWrongCommitHash(): Promise<string> {
 }
 
 test('verification success commits matching', async () => {
+  await createCommitEvidenceSuccess();
   await verifyCommitEvidenceSuccess();
 });
 
 test('amend commit message -> verify success -> add new commit -> verify fail', async () => {
-  const branchAtBegin = getCurrentBranch();
-  const featureBranch = 'some_other_feature_branch';
-  expect(branchAtBegin !== featureBranch).toBe(true);
-
   await createCommitEvidenceSuccess();
 
-  await switchToBranch(featureBranch);
+  const branchAtBegin = getCurrentBranch();
+  await switchToNewFeatureBranch();
 
   await runCommand("git commit --amend -m 'Some changed commit message'");
 
   await verifyCommitEvidenceMatchingTreeHashes();
 
   await runCommand('git add -f test/create-evidence/commit-evidence.json');
-  await runCommand('git commit -m "Some new commit"');
+  await runCommand('git commit --no-verify -m "Some new commit"');
 
   await verifyCommitEvidenceWrongCommitHash();
 
