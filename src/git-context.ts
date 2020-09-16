@@ -2,18 +2,21 @@ import { runCommandOrDie } from './util';
 
 export interface GitContext {
   gitRootDir: string;
-  currentCommit: string;
+  currentCommitHash: string;
+  currentTreeHash: string;
   currentBranch: string;
 }
 
 export function resolveGitContext(): GitContext {
-  // Order commands with ascending complexity.
+  // The first command is important for error messages.
   const gitRootDir = getGitRootDir();
-  const currentCommit = getHEADCommitHash();
+  const currentCommitHash = getHEADCommitHash();
+  const currentTreeHash = getHEADTreeHash();
   const currentBranch = getCurrentBranch();
   return {
     gitRootDir,
-    currentCommit,
+    currentCommitHash,
+    currentTreeHash,
     currentBranch,
   };
 }
@@ -24,6 +27,10 @@ function getGitRootDir(): string {
 
 export function getHEADCommitHash(): string {
   return runCommandOrDie('git rev-parse HEAD').trim();
+}
+
+export function getHEADTreeHash(): string {
+  return runCommandOrDie('git rev-parse HEAD^{tree}').trim();
 }
 
 export function getCurrentBranch(): string {

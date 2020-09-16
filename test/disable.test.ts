@@ -7,7 +7,7 @@ import {
 } from './verify-commit-evidence.test';
 import { DisableFile } from '../src/resolve-context';
 
-async function switchToBranch(branchName: string) {
+export async function switchToBranch(branchName: string): Promise<void> {
   await runCommand(`git branch -d ${branchName} || true`);
   await runCommand(
     `git checkout -b ${branchName} || git checkout ${branchName}`,
