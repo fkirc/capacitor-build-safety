@@ -1,6 +1,13 @@
 import { exec } from 'child_process';
 import { join } from 'path';
 
+export async function switchToNewFeatureBranch(): Promise<string> {
+  const randomString = Math.random().toString();
+  const branchName = `feature_${randomString}`;
+  await runCommand(`git checkout -b ${branchName}`);
+  return branchName;
+}
+
 function buildCapSafeCommand(args: string) {
   return `${join(process.cwd(), 'bin', 'capsafe')} ${args}`;
 }

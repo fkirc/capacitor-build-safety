@@ -14,7 +14,7 @@ In particular, the following mistakes can lead to broken app releases or wasted 
 `capsafe` is a simple tool that prevents those mistakes.
 For example, `capsafe` prevents broken Android releases with the following message, if a developer forgot to sync Capacitor for the most recent commit:
 
-`error: Current commit 25a7a56bca71 is not equal to commit 8c8476eb77f6 in 'android/app/src/main/assets/public/commit-evidence.json'. Did you forget to build/sync with Capacitor?`
+`error: Current commit 25a7a56bca71 does not match with commit 8c8476eb77f6 in 'android/app/src/main/assets/public/commit-evidence.json'. Did you forget to build/sync with Capacitor?`
 
 Similarly, `capsafe` prevents broken iOS-builds if a developer forgot to do a web-build:
 
@@ -28,9 +28,9 @@ Beside of native apps, `capsafe` is also usable for browser-based tests that run
 `capsafe` provides three commands to prevent broken apps: `create-commit-evidence`, `verify-commit-evidence`, `validate-capacitor-config`.
 Typically, those commands run in the following steps:
 
-- After each web-build, `create-commit-evidence` creates a file `commit-evidence.json` in your web-build folder. `commit-evidence.json` contains the current HEAD-commit hash.
+- After each web-build, `create-commit-evidence` creates a file `commit-evidence.json` in your web-build folder. `commit-evidence.json` contains information about the current HEAD-commit (the tree hash and the commit hash).
 - Naturally, Capacitor-commands like `cap sync` copy `commit-evidence.json` to native asset directories, along with all other web-assets.
-- Later on, during each native app build, `verify-commit-evidence` verifies that the current HEAD-commit is still equal to the commit in `commit-evidence.json` in the respective native asset directory.
+- Later on, during each native app build, `verify-commit-evidence` verifies that the current HEAD-commit still matches with `commit-evidence.json` in the respective native asset directory.
 - `validate-capacitor-config` runs before each app release or in a continuous integration pipeline.
 
 ## Disable checks temporarily

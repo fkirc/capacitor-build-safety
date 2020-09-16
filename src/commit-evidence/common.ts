@@ -2,6 +2,7 @@ import { joinDirWithFileName } from '../util';
 
 export interface CommitEvidence {
   commitHash: string;
+  treeHash: string;
   created: string;
 }
 
