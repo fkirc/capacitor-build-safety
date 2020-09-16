@@ -50,6 +50,6 @@ test('disable feature branch - re-enable after branch switching', async () => {
   expect(output).toContain('Deleted');
   expect(output).toContain("capsafe.disable.json'");
   expect(output).toContain('Re-enabled capsafe because the current branch ');
-  expect(output).toContain("was not equal to branch 'some_feature_branch' in ");
+  expect(output).toContain("was not equal to branch 'feature_");
   expect(output).toContain('capsafe.disable.json');
 });
