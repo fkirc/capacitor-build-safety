@@ -38,6 +38,7 @@ jobs:
         run: |
           npm version ${{ github.event.inputs.new_version }} --git-tag-version=true
           npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+          npm whoami
           npm publish
           git push origin && git push origin --tags
         env:
