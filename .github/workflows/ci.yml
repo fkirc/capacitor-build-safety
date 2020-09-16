@@ -13,7 +13,7 @@ on:
       new_version:
         description: 'New version'
         required: true
-        default: 'patch'
+        default: 'one of <newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease'
 
 jobs:
   ci:
