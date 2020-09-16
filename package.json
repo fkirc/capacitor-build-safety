@@ -1,6 +1,6 @@
 {
   "name": "capacitor-build-safety",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Make app releases safer. Reduce thinking with automated checks.",
   "repository": {
     "type": "git",
