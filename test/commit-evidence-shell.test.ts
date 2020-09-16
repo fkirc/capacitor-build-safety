@@ -1,11 +1,11 @@
 import { runCommand, runCommandExpectFailure } from './test-util';
 
 function cmdCreateCommitEvidence(path: string): string {
-  return `git rev-parse HEAD > ${path}`;
+  return `git rev-parse HEAD^{tree} > ${path}`;
 }
 
 function cmdVerifyCommitEvidence(path: string): string {
-  return `git rev-parse HEAD | diff ${path} -`;
+  return `git rev-parse HEAD^{tree} | diff ${path} -`;
 }
 
 test('create verify success', async () => {
