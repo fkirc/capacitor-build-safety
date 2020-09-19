@@ -24,6 +24,8 @@ jobs:
         with:
           node-version: 14.x
       - uses: actions/checkout@v2
+      - run: git config --global user.email "mail@felixkirchengast.at"
+      - run: git config --global user.name "Felix Kirchengast (GitHub Action)"
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
