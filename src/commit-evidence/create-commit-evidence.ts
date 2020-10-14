@@ -7,6 +7,7 @@ export function createCommitEvidence(
   buildDir: string,
 ): void {
   const evidence: CommitEvidence = {
+    branch: context.gitContext.currentBranch,
     commitHash: context.gitContext.currentCommitHash,
     treeHash: context.gitContext.currentTreeHash,
     created: new Date().toISOString(),
