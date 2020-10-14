@@ -1,6 +1,10 @@
-# Capacitor Build Safety - capsafe
+# capsafe - Make Builds Traceable And Safer
 
-Build and release with confidence.
+If a tester cannot immediately see from which commit and which branch a given build originates, then this lack of certainty can cause a huge waste of time.
+Moreover, there are industries that require each deployment to be _end-to-end traceable_.
+To be _end-to-end traceable_, we want a bombproof trace all the way from an app or web-server back to the specific Git-commit that was used to build it.
+
+To do so, `capsafe` adds a file `commit-evidence.json` to all your builds.
 
 <a href="https://github.com/fkirc/capacitor-build-safety/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/capacitor-build-safety/workflows/CI/badge.svg/?branch=master"></a>
 
