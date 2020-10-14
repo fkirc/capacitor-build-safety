@@ -131,25 +131,3 @@ If you have tests that run against a web-build (without live reload), then you m
 ```
 npx capsafe verify-commit-evidence build && my_web_testing_tool
 ```
-
-## FAQ
-
-### Continuous Integration
-
-`capsafe` can be easily integrated into CI pipelines.
-
-- `validate-capacitor-config` is a critical check for most Capacitor apps.
-- `create-commit-evidence` might be useful for improving the traceability of CI-generated builds.
-- In contrast, `verify-commit-evidence` is not so useful for CI pipelines, because computers never "forget" to run a step in a fixed procedure.
-
-### What about uncommitted changes?
-
-`capsafe` only looks at the current commit/branch and ignores uncommitted changes. Although uncommitted changes can be a risk, this behavior is a tradeoff between safety and usability.
-For example, you might want to increment an Android version number without repeating a web-build.
-`capsafe` allows you to do so with the following steps:
-- Increment an Android version number without committing it.
-- Do the Android release build.
-- Commit the incremented version number once the Android release build is finished.
-
-The point is to make "one last tweak" in native code without having to repeat a web-build.
-Nevertheless, `capsafe`'s behavior with uncommitted changes is subject to change in future versions.
