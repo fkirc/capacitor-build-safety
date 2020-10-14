@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Expand `commit-evidence.json` with the current branch during builds.
+
 ## 1.2.0
 
 - To prevent unnecessary failures, look at tree hashes in addition to commit hashes.
