@@ -8,14 +8,15 @@ To do so, `capsafe` adds a file `commit-evidence.json` to all your builds.
 
 <a href="https://github.com/fkirc/capacitor-build-safety/actions?query=branch%3Amaster"><img alt="CI status" src="https://github.com/fkirc/capacitor-build-safety/workflows/CI/badge.svg/?branch=master"></a>
 
-[Capacitor](https://capacitorjs.com/) is a great tool for cross-platform app development (iOS/Android/Web).
+`capsafe` was written with [Capacitor](https://capacitorjs.com/) in mind, although you do not need to use Capacitor.
+Capacitor is a great tool for cross-platform app development (iOS/Android/Web).
 However, Capacitor builds are prone to mistakes.
 In particular, the following mistakes can lead to broken app releases or wasted developer time:
 
 - Forgetting to build/sync a web-build for the most recent commit (leads to outdated or broken apps).
 - Wrong Capacitor configs (leads to broken apps, see this [issue](https://github.com/ionic-team/capacitor/discussions/1478) for details).
 
-`capsafe` is a simple tool that prevents those mistakes.
+`capsafe` helps to prevent those mistakes.
 For example, `capsafe` prevents broken Android releases with the following message, if a developer forgot to sync Capacitor for the most recent commit:
 
 `error: Current commit 25a7a56bca71 does not match with commit 8c8476eb77f6 in 'android/app/src/main/assets/public/commit-evidence.json'. Did you forget to build/sync with Capacitor?`
