@@ -42,7 +42,7 @@ export async function verifyCommitEvidenceWrongCommitHash(): Promise<string> {
     " does not match with commit 0e827118c19e689ca08990a5c63b4567e884c153 in '/",
   );
   expect(output).toContain(
-    "/test/sample-evidence/commit-evidence.json'. Did you forget to build/sync with Capacitor?\n",
+    "/test/sample-evidence/commit-evidence.json': Run 'capsafe disable' to disable this check temporarily (if you know what you are doing)\n",
   );
   return output;
 }
