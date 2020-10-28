@@ -79,7 +79,7 @@ test('evidence not found', async () => {
     `verify-commit-evidence node_modules`,
   );
   expect(output).toContain(
-    "/node_modules/commit-evidence.json' does not exist.\n",
+    "/node_modules/commit-evidence.json' does not exist: Run 'capsafe disable' to disable this check temporarily (if you know what you are doing)",
   );
 });
 

@@ -8,6 +8,7 @@ import {
 import { CapSafeContext } from '../resolve-context';
 
 import { checkCommandDisabled } from '../disable/disable';
+import { existsSync } from 'fs';
 
 export function verifyCommitEvidence(
   context: CapSafeContext,
@@ -17,6 +18,9 @@ export function verifyCommitEvidence(
     return;
   }
   const evidencePath = getCommitEvidencePath(buildDir);
+  if (!existsSync(evidencePath)) {
+    logDeactivatableError(`${getDebugPath(evidencePath)} does not exist`);
+  }
   const evidence: Partial<CommitEvidence> = readJsonFile(evidencePath);
   if (
     checkHashes(
