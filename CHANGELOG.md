@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Improve error messages to notify developers about `capsafe disable`.
+
 ## 1.3.0
 
 - Expand `commit-evidence.json` with the current branch during builds.

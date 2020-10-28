@@ -23,7 +23,7 @@ For example, `capsafe` prevents broken Android releases with the following messa
 
 Similarly, `capsafe` prevents broken iOS-builds if a developer forgot to do a web-build:
 
-`error: 'ios/App/public/commit-evidence.json' does not exist.`
+`error: 'ios/App/public/commit-evidence.json' does not exist: Run 'capsafe disable' to disable this check temporarily (if you know what you are doing)`
 
 Beside of native apps, `capsafe` is also usable for browser-based tests that run against web-builds.
 `capsafe` ensures that browser-based tests are always running against the latest commit.
