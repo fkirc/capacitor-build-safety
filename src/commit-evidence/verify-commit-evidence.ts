@@ -1,5 +1,10 @@
 import { CommitEvidence, getCommitEvidencePath } from './common';
-import { getDebugPath, logFatal, readJsonFile } from '../util';
+import {
+  getDebugPath,
+  logDeactivatableError,
+  logFatal,
+  readJsonFile,
+} from '../util';
 import { CapSafeContext } from '../resolve-context';
 
 import { checkCommandDisabled } from '../disable/disable';
@@ -38,10 +43,10 @@ export function verifyCommitEvidence(
   } else {
     const currentCommit = context.gitContext.currentCommitHash;
     const evidenceCommit = evidence.commitHash;
-    logFatal(
+    logDeactivatableError(
       `Current commit ${currentCommit} does not match with commit ${evidenceCommit} in ${getDebugPath(
         evidencePath,
-      )}. Did you forget to build/sync with Capacitor?`,
+      )}`,
     );
   }
 }
