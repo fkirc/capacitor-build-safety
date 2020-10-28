@@ -46,6 +46,13 @@ export function getDebugPath(path: string): string {
   return `\'${resolve(path)}\'`; // Show an absolute path to users in case of errors.
 }
 
+export function logDeactivatableError(msg: string): never {
+  console.error(
+    `error: ${msg}: Run 'capsafe disable' to disable this check temporarily (if you know what you are doing)`,
+  );
+  return process.exit(1) as never;
+}
+
 export function logFatal(msg: string): never {
   console.error(`error: ${msg}`);
   return process.exit(1) as never;

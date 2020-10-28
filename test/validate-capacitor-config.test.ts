@@ -16,7 +16,7 @@ test('validation fail', async () => {
   );
   expect(output).toContain('error: Validation failed: server of ');
   expect(output).toContain(
-    "test/capacitor-config/failure.capacitor.config.json' is not undefined.",
+    "test/capacitor-config/failure.capacitor.config.json' is not undefined",
   );
 });
 

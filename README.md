@@ -19,7 +19,7 @@ In particular, the following mistakes can lead to broken app releases or wasted 
 `capsafe` helps to prevent those mistakes.
 For example, `capsafe` prevents broken Android releases with the following message, if a developer forgot to sync Capacitor for the most recent commit:
 
-`error: Current commit 25a7a56bca71 does not match with commit 8c8476eb77f6 in 'android/app/src/main/assets/public/commit-evidence.json'. Did you forget to build/sync with Capacitor?`
+`error: Current commit 25a7a56bca71 does not match with commit 8c8476eb77f6 in 'android/app/src/main/assets/public/commit-evidence.json': Run 'capsafe disable' to disable this check temporarily (if you know what you are doing)`
 
 Similarly, `capsafe` prevents broken iOS-builds if a developer forgot to do a web-build:
 

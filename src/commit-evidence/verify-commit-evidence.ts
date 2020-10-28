@@ -1,8 +1,14 @@
 import { CommitEvidence, getCommitEvidencePath } from './common';
-import { getDebugPath, logFatal, readJsonFile } from '../util';
+import {
+  getDebugPath,
+  logDeactivatableError,
+  logFatal,
+  readJsonFile,
+} from '../util';
 import { CapSafeContext } from '../resolve-context';
 
 import { checkCommandDisabled } from '../disable/disable';
+import { existsSync } from 'fs';
 
 export function verifyCommitEvidence(
   context: CapSafeContext,
@@ -12,6 +18,9 @@ export function verifyCommitEvidence(
     return;
   }
   const evidencePath = getCommitEvidencePath(buildDir);
+  if (!existsSync(evidencePath)) {
+    logDeactivatableError(`${getDebugPath(evidencePath)} does not exist`);
+  }
   const evidence: Partial<CommitEvidence> = readJsonFile(evidencePath);
   if (
     checkHashes(
@@ -38,10 +47,10 @@ export function verifyCommitEvidence(
   } else {
     const currentCommit = context.gitContext.currentCommitHash;
     const evidenceCommit = evidence.commitHash;
-    logFatal(
+    logDeactivatableError(
       `Current commit ${currentCommit} does not match with commit ${evidenceCommit} in ${getDebugPath(
         evidencePath,
-      )}. Did you forget to build/sync with Capacitor?`,
+      )}`,
     );
   }
 }
