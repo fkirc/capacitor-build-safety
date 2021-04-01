@@ -48,7 +48,7 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "husky": "^4.3.0",
+    "husky": "^6.0.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.3.0",
     "rimraf": "^3.0.2",
